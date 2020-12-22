@@ -1,5 +1,5 @@
 <template>
-  <input :type="type" :placeholder="placeholder" :class="{ success:state==='success', error:state==='false' }" v-model="inputVal">
+  <input :type="type" :placeholder="placeholder" :class="{ success:state==='success', error:state==='false' }" v-model="inputVal" @input="inputHandle">
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
   },
   watch: {
     inputVal (val) {
-      console.log(val);
+      // console.log(val);
       // 把字符串转成正则规则对象
       const reg = new RegExp(this.rule)
       // 判断输入框输入的val值 是不是符合字符串规则的
@@ -26,7 +26,14 @@ export default {
         this.state = 'success'
       }
     }
-  }
+  },
+  methods: {
+    inputHandle () {
+      // console.log(this.inputVal);
+      // console.log('子组件被触发了');
+      this.$emit('aa', { [this.type]: this.inputVal })
+    }
+  },
 }
 </script>
 

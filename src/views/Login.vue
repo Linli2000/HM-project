@@ -7,8 +7,8 @@
       <span class="iconfont iconnew"></span>
     </div>
     <div class="inputWrapper">
-      <MyInput type="text" placeholder="请输入手机号" rule="/^[0-9A-Za-z_]{5,11}$/"></MyInput>
-      <MyInput type="password" placeholder="密码"></MyInput>
+      <MyInput type="text" placeholder="请输入手机号" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
+      <MyInput type="password" placeholder="密码" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
     </div>
 
     <div class="btnSubmit">
@@ -25,10 +25,28 @@ import style from '../style/iconfont.css'
 // 引入input组件
 import MyInput from '../components/MyInput.vue'
 export default {
-
   // 注册组件
   components: {
     MyInput
+  },
+  data () {
+    return {
+      text: "",
+      password: ""
+    }
+  },
+
+  methods: {
+    aaHandel (obj) {
+      // console.log(val);
+      // this.text = val
+      if (obj.text) {
+        this.text = obj.text
+      } else if (obj.password) {
+        this.password = obj.password
+      }
+      // console.log(this.text);
+    }
   }
 };
 </script>
