@@ -6,7 +6,7 @@ import Home from '../views/Home.vue'
 import login from '../views/Login'
 Vue.use(VueRouter)
 
-// 路由配置表 通过路径切换页面
+// 路由配置表 通过路径切换页面s
 const routes = [
   {
     path: '/',

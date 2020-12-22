@@ -11,7 +11,7 @@
       <MyInput type="password" placeholder="密码" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
     </div>
 
-    <div class="btnSubmit">
+    <div class="btnSubmit" @click="loginHandle">
       <button>登录</button>
     </div>
 
@@ -24,6 +24,9 @@ import style from '../style/iconfont.css'
 
 // 引入input组件
 import MyInput from '../components/MyInput.vue'
+
+// 引入自己封装好的后台接口
+import { userLogin } from "../api/index.js";
 export default {
   // 注册组件
   components: {
@@ -37,6 +40,7 @@ export default {
   },
 
   methods: {
+    // 子组件传递的参数
     aaHandel (obj) {
       // console.log(val);
       // this.text = val
@@ -46,8 +50,19 @@ export default {
         this.password = obj.password
       }
       // console.log(this.text);
-    }
-  }
+    },
+    // 登录事件处理函数
+    loginHandle () {
+      console.log('aaa');
+      // console.log(userLogin);
+      // 准备发送请求所需的参数
+      const data = { username: 10086, password: 111 };
+      // 调用封装的登录接口函数，并且传递请求参数
+      userLogin(data).then((res) => {
+        console.log(res);
+      });
+    },
+  },
 };
 </script>
 
