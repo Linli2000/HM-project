@@ -7,8 +7,9 @@
       <span class="iconfont iconnew"></span>
     </div>
     <div class="inputWrapper">
-      <MyInput name="nickname" type="text" placeholder="昵称" err_message="你输入正确昵称" :rule="/^.{2,11}$/" @aa="aaHandel"></MyInput>
+
       <MyInput type="text" name="username" placeholder="请输入手机号" err_message="请输入5到11位的用户名" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
+      <MyInput name="nickname" type="text" placeholder="昵称" err_message="你输入正确昵称" :rule="/^.{2,11}$/" @aa="aaHandel"></MyInput>
       <MyInput type="password" name="password" placeholder="密码" err_message="请输入6到18位的密码" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
     </div>
     <MyButton @bb='registerHandle'>注册</MyButton>
@@ -23,6 +24,8 @@ import style from '../style/iconfont.css'
 import MyInput from '../components/MyInput.vue'
 import MyButton from '../components/MyButton.vue'
 
+// 导入封装的 "@/api/index.js" ，index.js 结尾可以简写成 "@/api" 即可。
+import { userRegister } from "@/api";
 // 引入自己封装好的后台接口
 import { userLogin } from "../api/index.js";
 export default {
@@ -56,6 +59,21 @@ export default {
       }
       // // 调用封装的注册用户的 api，向后端发请求注册用户
       // console.log('注册事件');
+      userRegister({
+        username: this.username,
+        password: this.password,
+        nickname: this.nickname,
+      }).then((res) => {
+        // console.log(res);
+        // 错误的提示
+        if (res.data.statusCode === 400) {
+          this.$toast.fail(res.data.message);
+        }
+        // 成功的提示
+        else {
+          this.$toast.success("恭喜你，注册成功！");
+        }
+      });
     },
   },
 };
