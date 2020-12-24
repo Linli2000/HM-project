@@ -35,7 +35,7 @@ export default {
       this.$emit('aa', { [this.$attrs.name]: this.inputVal })
     },
     checkVal () {
-      if (this.state = 'false') {
+      if (this.state == 'false') {
         alert(this.err_message);
       }
     }

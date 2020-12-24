@@ -42,7 +42,9 @@ export default {
       // console.log(obj);
       // 拿到输入框的件
       const key = Object.keys(obj)[0]
-      console.log(key);
+      const value = Object.values(obj)[0]
+      this[key] = value
+      console.log(key, value);
     },
     // 登录事件处理函数
     loginHandle () {
