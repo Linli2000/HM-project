@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <h1>这是首页</h1>
-    <router-link to="/login"> 跳转到login </router-link>
+    <router-link to="/login">
+      <van-button type="primary">跳转到首页</van-button>
+    </router-link>
   </div>
 </template>
 

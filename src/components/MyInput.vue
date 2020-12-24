@@ -1,11 +1,11 @@
 <template>
-  <input :type="type" :placeholder="placeholder" :class="{ success:state==='success', error:state==='false' }" v-model="inputVal" @input="inputHandle">
+  <input :class="{ success:state==='success' , error:state==='false' }" v-model="inputVal" @input="inputHandle" @change="checkVal">
 </template>
 
 <script>
 export default {
-  // 接收从父组件那边传过来的placeholder属性
-  props: ['placeholder', 'type', 'rule', 'err_message'],
+  // 接收从父组件那边传过来的属性
+  props: ['rule', 'err_message'],
   data () {
     return {
       inputVal: '',
@@ -31,9 +31,15 @@ export default {
     inputHandle () {
       // console.log(this.inputVal);
       // console.log('子组件被触发了');
-      this.$emit('aa', { [this.type]: this.inputVal })
+      console.log("this.$attrs.name", this.$attrs.name);
+      this.$emit('aa', { [this.$attrs.name]: this.inputVal })
+    },
+    checkVal () {
+      if (this.state = 'false') {
+        alert(this.err_message);
+      }
     }
-  },
+  }
 }
 </script>
 

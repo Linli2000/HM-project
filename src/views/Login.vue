@@ -7,14 +7,10 @@
       <span class="iconfont iconnew"></span>
     </div>
     <div class="inputWrapper">
-      <MyInput type="text" placeholder="请输入手机号" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
-      <MyInput type="password" placeholder="密码" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
+      <MyInput type="text" name="username" placeholder="请输入手机号" err_message="请输入5到11位的用户名" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
+      <MyInput type="password" name="password" placeholder="密码" err_message="请输入6到18位的密码" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
     </div>
-
-    <div class="btnSubmit" @click="loginHandle">
-      <button>登录</button>
-    </div>
-
+    <MyButton @bb='loginHandle'>登录按钮</MyButton>
   </div>
 </template>
 
@@ -24,17 +20,18 @@ import style from '../style/iconfont.css'
 
 // 引入input组件
 import MyInput from '../components/MyInput.vue'
+import MyButton from '../components/MyButton.vue'
 
 // 引入自己封装好的后台接口
 import { userLogin } from "../api/index.js";
 export default {
   // 注册组件
   components: {
-    MyInput
+    MyInput, MyButton
   },
   data () {
     return {
-      text: "",
+      username: "",
       password: ""
     }
   },
@@ -42,25 +39,29 @@ export default {
   methods: {
     // 子组件传递的参数
     aaHandel (obj) {
-      // console.log(val);
-      // this.text = val
-      if (obj.text) {
-        this.text = obj.text
-      } else if (obj.password) {
-        this.password = obj.password
-      }
-      // console.log(this.text);
+      // console.log(obj);
+      // 拿到输入框的件
+      const key = Object.keys(obj)[0]
+      console.log(key);
     },
     // 登录事件处理函数
     loginHandle () {
       console.log('aaa');
+      if (!this.username || !this.password) {
+        return alert("用户名或密码不能为空");
+      }
       // console.log(userLogin);
       // 准备发送请求所需的参数
-      const data = { username: 10086, password: 111 };
+      const data = { username: this.username, password: this.password };
       // 调用封装的登录接口函数，并且传递请求参数
       userLogin(data).then((res) => {
         console.log(res);
-      });
+        if (res.data.message === '登录成功') {
+          console.log('把token保存到本地');
+        } else {
+          alert(res.data.message)
+        }
+      })
     },
   },
 };
@@ -84,19 +85,5 @@ export default {
 }
 .inputWrapper {
   padding-bottom: 16/360 * 100vw;
-}
-.btnSubmit {
-  padding-top: 26/360 * 100vw;
-  button {
-    width: 100%;
-    // height: 48/360*100vw;
-    line-height: 48/360 * 100vw;
-    font-size: 18px;
-    background: #cc3300;
-    color: white;
-    border: none;
-    outline: none;
-    border-radius: 24/360 * 100vw;
-  }
 }
 </style>
