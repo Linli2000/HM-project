@@ -7,7 +7,6 @@
       <span class="iconfont iconnew"></span>
     </div>
     <div class="inputWrapper">
-
       <MyInput type="text" name="username" placeholder="请输入手机号" err_message="请输入5到11位的用户名" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
       <MyInput name="nickname" type="text" placeholder="昵称" err_message="你输入正确昵称" :rule="/^.{2,11}$/" @aa="aaHandel"></MyInput>
       <MyInput type="password" name="password" placeholder="密码" err_message="请输入6到18位的密码" rule="[0-9A-Za-z_]{5,11}" @aa="aaHandel"></MyInput>
@@ -49,7 +48,7 @@ export default {
       const key = Object.keys(obj)[0]
       const value = Object.values(obj)[0]
       this[key] = value
-      console.log(key, value);
+      // console.log(key, value);
     },
     // 登录事件处理函数
     registerHandle () {

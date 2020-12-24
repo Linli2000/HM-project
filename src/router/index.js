@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import login from '../views/Login'
 import Register from '@/views/Register.vue'
+import Userinfo from '@/views/Userinfo.vue'
 
 Vue.use(VueRouter)
 
@@ -24,8 +25,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
-  }
-
+  }, {
+    path: '/userinfo',
+    name: 'Userinfo',
+    component: Userinfo,
+  },
 ]
 
 const router = new VueRouter({

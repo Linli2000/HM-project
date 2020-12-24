@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  // 接收从父组件那边传过来的属性
+  // 接收从父组件那边传过来的属性 自定义的属性就要 标签自带的属性就可以直接不用写
   props: ['rule', 'err_message'],
   data () {
     return {
@@ -31,7 +31,7 @@ export default {
     inputHandle () {
       // console.log(this.inputVal);
       // console.log('子组件被触发了');
-      console.log("this.$attrs.name", this.$attrs.name);
+      // console.log("this.$attrs.name", this.$attrs.name);
       this.$emit('aa', { [this.$attrs.name]: this.inputVal })
     },
     checkVal () {

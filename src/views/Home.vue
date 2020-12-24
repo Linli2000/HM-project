@@ -7,6 +7,9 @@
     <router-link to="/register">
       <van-button type="primary">跳转到注册页</van-button>
     </router-link>
+    <router-link to="/Userinfo">
+      <van-button type="primary">跳转到个人中心页</van-button>
+    </router-link>
   </div>
 </template>
 
