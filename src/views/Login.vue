@@ -50,7 +50,7 @@ export default {
     loginHandle () {
       console.log('aaa');
       if (!this.username || !this.password) {
-        return alert("用户名或密码不能为空");
+        return this.$toast("用户名或密码不能为空");
       }
       // console.log(userLogin);
       // 准备发送请求所需的参数
@@ -61,7 +61,7 @@ export default {
         if (res.data.message === '登录成功') {
           console.log('把token保存到本地');
         } else {
-          alert(res.data.message)
+          this.$toast.fail(res.data.message)
         }
       })
     },

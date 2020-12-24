@@ -36,7 +36,7 @@ export default {
     },
     checkVal () {
       if (this.state == 'false') {
-        alert(this.err_message);
+        this.$toast.fail(this.err_message);
       }
     }
   }
