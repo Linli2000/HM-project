@@ -1,5 +1,5 @@
 
-// 1️⃣ 导入自己封装的 axios 实例
+//1️⃣  导入自己封装的 axios 实例
 import request from '@/utils/request'
 
 // 2️⃣ 导出接口函数
