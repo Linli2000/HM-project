@@ -36,7 +36,17 @@
 
 
 <script>
-export default {};
+import { getUserInfo } from '@/utils/myToken';
+import { userDetail } from '@/api';
+export default {
+  mounted () {
+    //使用结构获取到id
+    const { id } = getUserInfo();
+    userDetail(id).then((res) => {
+      console.log(res);
+    })
+  }
+};
 </script>
 
 
