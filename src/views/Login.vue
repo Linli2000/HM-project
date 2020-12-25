@@ -34,6 +34,8 @@ import MyButton from '@/components/MyButton.vue'
 
 // 引入自己封装好的后台接口
 import { userLogin } from '@/api/index.js'
+import { setToken } from '@/utils/myToken'
+
 export default {
   // 注册组件
   components: {
@@ -73,7 +75,7 @@ export default {
           // console.log('把token保存到本地')
           // console.log(res.data.data.token); 拿到token值
           // localStorage.setItem('TOKEN_HMTT', res.data.data.token)
-          
+          setToken(res.data.data.token)
           //登录成功 给用户一个成功的提示
           this.$toast.success('欢迎入坑')
         } else {
