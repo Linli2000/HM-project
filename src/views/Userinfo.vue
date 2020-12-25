@@ -5,12 +5,12 @@
     <!-- 头部 -->
     <div class="header">
       <img class="avatar"
-           src="../assets/1.png"
+           :src='head_img'
            alt="" />
       <div class="info">
         <p class="name">
           <i class="iconfont iconxingbienv"></i>
-          <span>仙女姐姐</span>
+          <span>{{nickname}}</span>
         </p>
         <p class="date">2020-12-25</p>
       </div>
@@ -38,12 +38,28 @@
 <script>
 import { getUserInfo } from '@/utils/myToken';
 import { userDetail } from '@/api';
+// 导入用户默认头像
+import defaultImg from "@/assets/logo.png";
 export default {
+  data () {
+    return {
+      gender: 0,
+      head_img: defaultImg,
+      nickname: "游客",
+    }
+  },
   mounted () {
     //使用结构获取到id
     const { id } = getUserInfo();
     userDetail(id).then((res) => {
       console.log(res);
+      // 结构出当前需要的数据
+      const { message, data } = res.data
+      // 把后台拿到的数据渲染到页面中
+      this.gender = data.gender;
+      // 如果有头像就使用，如果是空字符串，就使用默认头像
+      this.head_img = data.head_img || defaultImg;
+      this.nickname = data.nickname
     })
   }
 };
