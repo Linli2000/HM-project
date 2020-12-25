@@ -39,7 +39,7 @@
 import { getUserInfo } from '@/utils/myToken';
 import { userDetail } from '@/api';
 // 导入用户默认头像
-import defaultImg from "@/assets/logo.png";
+import defaultImg from "@/assets/1.png";
 export default {
   data () {
     return {
