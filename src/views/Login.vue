@@ -34,7 +34,7 @@ import MyButton from '@/components/MyButton.vue'
 
 // 引入自己封装好的后台接口
 import { userLogin } from '@/api/index.js'
-import { setToken } from '@/utils/myToken'
+import { setToken, setUserInfo } from '@/utils/myToken'
 
 export default {
   // 注册组件
@@ -75,9 +75,15 @@ export default {
           // console.log('把token保存到本地')
           // console.log(res.data.data.token); 拿到token值
           // localStorage.setItem('TOKEN_HMTT', res.data.data.token)
+          //拿到token值
           setToken(res.data.data.token)
+          //拿到用户数据
+          setUserInfo(res.data.data.user)
           //登录成功 给用户一个成功的提示
           this.$toast.success('欢迎入坑')
+          // 通过 vue 路由跳转到 个人中心页
+          this.$router.push("/userinfo");
+          // PS：location.href 一般用于跳出当前项目的时候才使用
         } else {
           this.$toast.fail(res.data.message)
         }
