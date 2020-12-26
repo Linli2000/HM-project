@@ -1,7 +1,14 @@
 <template>
-  <!-- 个人中心
-   -->
+  <!-- 个人中心-->
+  <!-- 头部导航栏 -->
   <div>
+    <van-nav-bar title="个人中心"
+                 left-text="返回"
+                 left-arrow
+                 @click-left="$router.back()" />
+    <!-- $router.back()通过路由回退到上一步 因为路由是挂载到全局的 -->
+    <!-- 一个小空格样式而已 -->
+    <div class="divider"></div>
     <!-- 头部 -->
     <div class="header">
       <img class="avatar"
@@ -9,10 +16,14 @@
            alt="" />
       <div class="info">
         <p class="name">
-          <i class="iconfont iconxingbienv"></i>
+          <i class="iconfont"
+             :class="{
+              iconxingbienan: gender === 1,
+              iconxingbienv: gender === 0  
+          }"></i>
           <span>{{nickname}}</span>
         </p>
-        <p class="date">2020-12-25</p>
+        <p class="date">{{create_date }}</p>
       </div>
       <i class="iconfont iconjiantou1"></i>
     </div>
@@ -46,6 +57,7 @@ export default {
       gender: 0,
       head_img: defaultImg,
       nickname: "游客",
+      create_date: ''
     }
   },
   mounted () {
@@ -61,6 +73,8 @@ export default {
       // 如果有头像就使用，如果是空字符串，就使用默认头像 现在的后台没有给图片 所以默认用我们的自己的图片
       this.head_img = data.head_img || defaultImg;
       this.nickname = data.nickname
+      // 时间 通过slice截取 从0到第10位
+      this.create_date = data.create_date.slice(0, 10);
     })
   }
 };
@@ -90,8 +104,11 @@ export default {
       margin: 5px 0;
     }
     .name {
-      .iconxingbienv {
+      .iconxingbienan {
         color: #8502c2;
+      }
+      .iconxingbienv {
+        color: skyblue;
       }
 
       span {
