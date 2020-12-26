@@ -5,7 +5,7 @@
     <!-- 头部 -->
     <div class="header">
       <img class="avatar"
-           :src='`http://127.0.0.1:3000${head_img}`'
+           :src='$baseURL+head_img'
            alt="" />
       <div class="info">
         <p class="name">
@@ -49,6 +49,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$baseURL);
     //使用结构获取到id
     const { id } = getUserInfo();
     userDetail(id).then((res) => {
