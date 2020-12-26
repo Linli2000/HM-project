@@ -10,7 +10,8 @@
     <!-- 一个小空格样式而已 -->
     <div class="divider"></div>
     <!-- 头部 -->
-    <div class="header">
+    <div class="header"
+         @click="$router.push('/useredit')">
       <img class="avatar"
            :src='$baseURL+head_img'
            alt="" />
