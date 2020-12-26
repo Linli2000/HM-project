@@ -17,11 +17,13 @@ export const removeToken=()=>{
 
 // 设置本地存储  拿到用户数据
  export const setUserInfo = (obj) => {
+  //  JSON.stringify() 方法用于将 值转换为 JSON 字符串。
   localStorage.setItem(USERINFO_HMTT, JSON.stringify(obj))
 }
 
 // 获取使用本地存储用户信息
 export const getUserInfo = () => {
+  // JSON.parse() 方法用于将一个 JSON 字符串转换为对象。
   return JSON.parse(localStorage.getItem(USERINFO_HMTT)) || {}
 }
 

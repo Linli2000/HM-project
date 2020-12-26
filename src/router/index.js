@@ -52,19 +52,21 @@ const router = new VueRouter({
 
 
 // 使用 router.beforeEach 注册一个全局前置守卫：
-router.beforeEach((to, from, next) => {
-  console.log('去往哪个城市(页面) -- to', to)
-  console.log('来自哪个城市(页面) - from', from)
-  console.log('下一个 - next 是一个函数', next)
-  // 代码的最后一定要记得放行，忘记放行就看不到任何页面了
-  // to.meta.isAuth  如果跳转下个页面里面有true这个属性 加了这个属性就是需要判断是不是需要登录才能看的页面 就是导航守卫
-  //  如果有就判断是不是有token值有跳转
-if(to.meta.isAuth==true){
+router.beforeEach(( to, from, next) => {
+  // console.log('去往哪个城市(页面) -- to', to)
+  // console.log('来自哪个城市(页面) - from', from)
+  // console.log('下一个 - next 是一个函数', next)
+  // 代码的最后一定要记得放行，忘记放行就看不到任何页面了   
+  // to.meta.isAuth  需要用户登录后才能访问的页面  如果跳转下个页面里面有true这个属性 加了这个属性就是需要判断是不是需要登录才能看的页面 就是导航守卫
+  //  如果有就判断是不是有token值有跳转  
+  if(to.meta.isAuth == true){
   if(!getToken()){
-    return router.replace ('/login')
-  }
+    // router.push(location) 想要导航到不同的 URL，则使用 router.push 方法。这个方法会向 history 栈添加一个新的记录，所以，当用户点击浏览器后退按钮时，则回到之前的 URL。
+    // router.replace(location)跟 router.push 很像，唯一的不同就是，它不会向 history 添加新记录，而是跟它的方法名一样 —— 替换掉当前的 history 记录。
+     return router.replace ('/login')
+     }
 }
-  next()
+  next() 
 })
 
 export default router

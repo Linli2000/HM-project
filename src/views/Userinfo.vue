@@ -5,7 +5,7 @@
     <!-- 头部 -->
     <div class="header">
       <img class="avatar"
-           :src='head_img'
+           :src='`http://127.0.0.1:3000${head_img}`'
            alt="" />
       <div class="info">
         <p class="name">
@@ -52,12 +52,12 @@ export default {
     //使用结构获取到id
     const { id } = getUserInfo();
     userDetail(id).then((res) => {
-      console.log(res);
+      // console.log(res);
       // 结构出当前需要的数据
       const { message, data } = res.data
       // 把后台拿到的数据渲染到页面中
       this.gender = data.gender;
-      // 如果有头像就使用，如果是空字符串，就使用默认头像
+      // 如果有头像就使用，如果是空字符串，就使用默认头像 现在的后台没有给图片 所以默认用我们的自己的图片
       this.head_img = data.head_img || defaultImg;
       this.nickname = data.nickname
     })
