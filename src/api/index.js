@@ -33,4 +33,26 @@ export const userDetail=(id)=>{
       Authorization:getToken()
     }
 })
-  }
+}
+//文件上传 图片预览那里的
+  export const uploadFile=(file)=>{
+    return request({
+    method: 'POST', 
+      url: `/upload`, 
+      data:file,
+      headers:{
+        Authorization:getToken()
+      }
+  })
+}
+// 编辑用户信息 得把编辑好的数据拿回来
+export const userUpdate = ({ id, ...data }) => {
+  return request({
+    method: 'POST',
+    url: `/user_update/${id}`,
+    data: data,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}
