@@ -11,7 +11,7 @@
       <!-- :after-read文件读取完成之后的回调函数 -->
       <van-uploader :after-read="afterRead">
         <img class="avatar_image"
-             :src="$baseURL + head_img"
+             :src=" head_img"
              alt="">
       </van-uploader>
 
@@ -45,9 +45,10 @@ export default {
   },
 
   methods: {
-    // 文件读取成功的回调函数
-    afterRead (e) {
-      console.log(e);
+    // 文件读取成功的回调函数  里面有一个默认的参数 可以直接在里面解构
+    afterRead ({ content, file }) {
+      //  this.head_img = content; 可以用来展示图片 不过只能用来展示
+      this.head_img = content
     },
 
     getCurrUserDetail () {
