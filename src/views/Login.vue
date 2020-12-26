@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="btnClose">
+    <div class="btnClose"
+         @click="$router.back()">
       <span class="iconfont iconicon-test"></span>
     </div>
     <div class="logo">
