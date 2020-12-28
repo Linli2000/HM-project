@@ -103,7 +103,7 @@ export default {
 
     // 性别选项下拉
     genderSelectHandle ({ gender }) {
-      console.log('aaa');
+      // console.log('aaa');
       this.upDateInfoHandle('gender', gender)
     },
     // 封装的密码和用户名更改

@@ -8,12 +8,20 @@ import Register from '@/views/Register.vue'
 import Userinfo from '@/views/Userinfo.vue'
 import Useredit from '@/views/Useredit.vue'
 import Attention from '@/views/Attention.vue'
+
+// 测试页面
+import Text from '@/dome/TestFollows.vue'
 import { getToken } from '@/utils/myToken'
 
 Vue.use(VueRouter)
 
 // 路由配置表 通过路径切换页面s
 const routes = [
+  {
+    path: '/text',
+    name: 'Text',
+    component: Text
+  },
   {
     path: '/',
     name: 'Home',

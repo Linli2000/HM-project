@@ -6,21 +6,56 @@
                  @click-left="$router.back()" />
     <!-- 2.0 关注列表 -->
     <div class="list">
-      <div class="list_item">
-        <img src="@/assets/logo.png"
+      <div class="list_item"
+           v-for="item in list"
+           :key="item.id">
+        <img v-if="item.head_img"
+             :src="$baseURL+item.head_img"
+             alt="">
+        <img v-else
+             src="../assets/1.png"
              alt="">
         <div class="info">
-          <p>火星新闻播报</p>
-          <p class="date">2020-12-12</p>
+          <p>{{item.nickname}}</p>
+          <p class="date">{{ item.create_date.slice(0,10) }}</p>
         </div>
-        <span class="cancel">取消关注</span>
+        <span class="cancel"
+              @click="cancelHandle (item.id)">取消关注</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { getUserFollows, removeUserFollowsById } from '@/api';
+export default {
+  data () {
+    return {
+      list: [],
+    }
+  },
+  mounted () {
+    this.getList();
+  },
+  methods: {
+    getList () {
+      getUserFollows().then((res) => {
+        console.log(res);
+        this.list = res.data.data
+      })
+    },
+    // 获取关注列表的api
+
+    cancelHandle (id) {
+      // 根据 id 移除掉用户关注
+      removeUserFollowsById(id).then((res) => {
+        // console.log("取消用户关注接口", res);
+        // 取消关注成功后，更新页面的列表
+        this.getList();
+      });
+    },
+  }
+}
 </script>
 
 <style lang="less" scoped>

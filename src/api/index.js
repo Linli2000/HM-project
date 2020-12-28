@@ -56,3 +56,36 @@ export const userUpdate = ({ id, ...data }) => {
     },
   })
 }
+/* 关注一共有 3 个接口 */
+// 关注接口1. 获取用户关注列表
+export const getUserFollows = () => {
+  return request({
+    method: 'GET',
+    url: `/user_follows`,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}
+
+// 关注接口2. 根据id添加关注
+export const addUserFollowsById = (id) => {
+  return request({
+    method: 'GET',
+    url: `/user_follows/${id}`,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}
+
+// 关注接口3. 根据 id 取消关注
+export const removeUserFollowsById = (id) => {
+  return request({
+    method: 'GET',
+    url: `/user_unfollow/${id}`,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}
