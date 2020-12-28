@@ -45,8 +45,11 @@
     <!-- 1.0 为修改昵称准备一个弹窗 -->
     <van-dialog v-model="nickNameShow"
                 title="修改昵称"
-                show-cancel-button>
-      内容
+                show-cancel-button
+                @confirm="nickNameHandle">
+      <van-field v-model="nicknameTemp"
+                 label="昵称"
+                 placeholder="请输入新昵称" />
     </van-dialog>
   </div>
 </template>
@@ -58,7 +61,8 @@ export default {
   data () {
     return {
       nickNameShow: false,
-
+      // 临时保存输入值的地方 用户点击确定发送后台以后才会有真的值
+      nicknameTemp: "",
       nickname: '',
       head_img: '',
       gender: 0,
@@ -67,6 +71,21 @@ export default {
   },
 
   methods: {
+
+    // nickNameHandle 是修改的弹出框点击事件 
+    nickNameHandle () {
+      // console.log('点击成功');
+      userUpdate({
+        id: this.id,
+        nickname: this.nicknameTemp,
+      }).then((res) => {
+        // 重新获取用户资料 因为更新了 上面已经把更改的上传到服务器了
+        this.getCurrUserDetail();
+      })
+
+
+
+    },
     // 文件读取成功的回调函数里面有一个默认的参数 可以直接在里面解构
     afterRead ({ content, file }) {
       //  this.head_img = content; 可以用来展示图片 不过只能用来展示
