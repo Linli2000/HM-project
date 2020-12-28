@@ -35,6 +35,7 @@
                 is-link />
       <van-cell title="密码"
                 value="*****"
+                @click="passwordShow=true"
                 is-link />
       <van-cell title="性别"
                 :value="gender === 0 ? '🤷‍♀️女' : '👦男'"
@@ -51,6 +52,17 @@
                  label="昵称"
                  placeholder="请输入新昵称" />
     </van-dialog>
+
+    <!-- type="password" 变成密码框 -->
+    <van-dialog v-model="passwordShow"
+                title="修改密码"
+                show-cancel-button
+                @confirm="passwordeHandle">
+      <van-field v-model="passwordTemp"
+                 label="密码"
+                 type="password"
+                 placeholder="请输入新密码" />
+    </van-dialog>
   </div>
 </template>
 
@@ -61,8 +73,11 @@ export default {
   data () {
     return {
       nickNameShow: false,
+      passwordShow: false,
       // 临时保存输入值的地方 用户点击确定发送后台以后才会有真的值
       nicknameTemp: "",
+      passwordTemp: '',
+
       nickname: '',
       head_img: '',
       gender: 0,
@@ -72,6 +87,16 @@ export default {
 
   methods: {
 
+    // 密码框的处理
+    passwordeHandle () {
+      userUpdate({
+        id: this.id,
+        password: this.passwordTemp
+      }).then((res) => {
+        // 重新获取用户资料 因为更新了 上面已经把更改的上传到服务器了
+        this.getCurrUserDetail();
+      })
+    },
     // nickNameHandle 是修改的弹出框点击事件 
     nickNameHandle () {
       // console.log('点击成功');
