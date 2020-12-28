@@ -6,7 +6,10 @@ import { NavBar } from 'vant'
 import { Uploader  } from 'vant'
 import { Dialog } from 'vant'
 import { Field } from 'vant'
+import { ActionSheet } from 'vant'
 
+
+Vue.use( ActionSheet )
 Vue.use( Field )
 Vue.use( Dialog)
 Vue.use(Uploader)

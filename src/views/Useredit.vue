@@ -39,15 +39,17 @@
                 is-link />
       <van-cell title="性别"
                 :value="gender === 0 ? '🤷‍♀️女' : '👦男'"
+                @click="genderShow=true"
                 is-link />
     </van-cell-group>
 
     <!-- 随便找个位置即可，因为最终是通过定位的方式显示到页面中 -->
     <!-- 1.0 为修改昵称准备一个弹窗 -->
-    <van-dialog v-model="nickNameShow"
+    <van-dialog v-model="
+                nickNameShow"
                 title="修改昵称"
                 show-cancel-button
-                @confirm="nickNameHandle">
+                @confirm="upDateInfoHandle('nickname',nicknameTemp)">
       <van-field v-model="nicknameTemp"
                  label="昵称"
                  placeholder="请输入新昵称" />
@@ -57,12 +59,19 @@
     <van-dialog v-model="passwordShow"
                 title="修改密码"
                 show-cancel-button
-                @confirm="passwordeHandle">
+                @confirm="upDateInfoHandle('password',passwordTemp)">
       <van-field v-model="passwordTemp"
                  label="密码"
                  type="password"
                  placeholder="请输入新密码" />
     </van-dialog>
+
+    <!-- 更改性别的 -->
+    <van-action-sheet v-model="genderShow"
+                      :actions="genderActions"
+                      @select="genderSelectHandle"
+                      close-on-click-action
+                      cancel-text="取消" />
   </div>
 </template>
 
@@ -74,10 +83,12 @@ export default {
     return {
       nickNameShow: false,
       passwordShow: false,
+      genderShow: false,
       // 临时保存输入值的地方 用户点击确定发送后台以后才会有真的值
       nicknameTemp: "",
       passwordTemp: '',
-
+      // name 属性用于展示 文档规定写name，gender 属性用于后台需要的数据
+      genderActions: [{ name: '男孩纸', gender: 1 }, { name: '女孩纸', gender: 0 }],
       nickname: '',
       head_img: '',
       gender: 0,
@@ -86,31 +97,23 @@ export default {
   },
 
   methods: {
-
-    // 密码框的处理
-    passwordeHandle () {
+    // 性别选项下拉
+    genderSelectHandle ({ gender }) {
+      console.log('aaa');
+      this.upDateInfoHandle('gender', gender)
+    },
+    // 封装的密码和用户名更改
+    upDateInfoHandle (key, value) {
       userUpdate({
         id: this.id,
-        password: this.passwordTemp
+        // 这里的参数不能写死，需同时实现更新 昵称 和 密码 s上面点击传下来的属性和名就可以直接使用
+        [key]: value
       }).then((res) => {
         // 重新获取用户资料 因为更新了 上面已经把更改的上传到服务器了
         this.getCurrUserDetail();
       })
     },
-    // nickNameHandle 是修改的弹出框点击事件 
-    nickNameHandle () {
-      // console.log('点击成功');
-      userUpdate({
-        id: this.id,
-        nickname: this.nicknameTemp,
-      }).then((res) => {
-        // 重新获取用户资料 因为更新了 上面已经把更改的上传到服务器了
-        this.getCurrUserDetail();
-      })
 
-
-
-    },
     // 文件读取成功的回调函数里面有一个默认的参数 可以直接在里面解构
     afterRead ({ content, file }) {
       //  this.head_img = content; 可以用来展示图片 不过只能用来展示
