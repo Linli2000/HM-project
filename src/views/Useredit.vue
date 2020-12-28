@@ -72,6 +72,9 @@
                       @select="genderSelectHandle"
                       close-on-click-action
                       cancel-text="取消" />
+
+    <div class="divider"></div>
+
   </div>
 </template>
 
@@ -97,6 +100,7 @@ export default {
   },
 
   methods: {
+
     // 性别选项下拉
     genderSelectHandle ({ gender }) {
       console.log('aaa');
@@ -111,6 +115,7 @@ export default {
       }).then((res) => {
         // 重新获取用户资料 因为更新了 上面已经把更改的上传到服务器了
         this.getCurrUserDetail();
+        this.$toast.success(res.data.message);
       })
     },
 

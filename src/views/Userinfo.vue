@@ -48,13 +48,16 @@
       <van-cell title="设置"
                 is-link />
     </van-cell-group>
-
+    <!-- 退出登录按钮 -->
+    <van-button block
+                type="default"
+                @click="logOutHandle">退出登录</van-button>
   </div>
 </template>
 
 
 <script>
-import { getUserInfo } from '@/utils/myToken';
+import { getUserInfo, removeToken, removeUserInfo } from '@/utils/myToken';
 import { userDetail } from '@/api';
 // 导入用户默认头像
 import defaultImg from "@/assets/1.png";
@@ -69,6 +72,17 @@ export default {
       nickname: "游客",
       create_date: ''
     }
+  },
+  methods: {
+    // 退出按钮的处理
+    logOutHandle () {
+      //  清除token 和 本地存储的数据 
+      removeToken()
+      // 清除本地存储的用户信息
+      removeUserInfo()
+
+      this.$router.replace('/')
+    },
   },
   mounted () {
     // console.log(this.$baseURL);
