@@ -38,6 +38,7 @@
     <van-cell-group>
       <van-cell title="我的关注"
                 value="关注的人"
+                @click=" $router.push('/attention')"
                 is-link />
       <van-cell title="我的跟帖"
                 value="跟帖/回复"
@@ -80,7 +81,7 @@ export default {
       removeToken()
       // 清除本地存储的用户信息
       removeUserInfo()
-
+      // 清除以后跳转到登录页
       this.$router.replace('/')
     },
   },

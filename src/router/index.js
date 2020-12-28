@@ -7,6 +7,7 @@ import login from '../views/Login'
 import Register from '@/views/Register.vue'
 import Userinfo from '@/views/Userinfo.vue'
 import Useredit from '@/views/Useredit.vue'
+import Attention from '@/views/Attention.vue'
 import { getToken } from '@/utils/myToken'
 
 Vue.use(VueRouter)
@@ -40,6 +41,15 @@ const routes = [
     path: '/useredit',
     name: 'Useredit',
     component:Useredit,
+    meta: {
+      isAuth: true,
+    },
+  },
+  ,
+  {
+    path: '/attention',
+    name: 'Attention',
+    component:Attention,
     meta: {
       isAuth: true,
     },
