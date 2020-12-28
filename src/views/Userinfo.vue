@@ -13,7 +13,12 @@
     <div class="header"
          @click="$router.push('/useredit')">
       <img class="avatar"
+           v-if="head_img"
            :src='$baseURL+head_img'
+           alt="" />
+      <img class="avatar"
+           v-else=" "
+           :src='defaultImg'
            alt="" />
       <div class="info">
         <p class="name">
@@ -56,13 +61,16 @@ export default {
   data () {
     return {
       gender: 0,
-      head_img: defaultImg,
+      // 只有写在data里面的才能被template接收  
+      // 用户没有头像的时候才使用默认头像 先定义一个默头像然后进行判断 如果有就显示head_img拼接 没有就显示自己定义的defaultImg 
+      defaultImg: defaultImg,
+      head_img: '',
       nickname: "游客",
       create_date: ''
     }
   },
   mounted () {
-    console.log(this.$baseURL);
+    // console.log(this.$baseURL);
     //使用结构获取到id
     const { id } = getUserInfo();
     userDetail(id).then((res) => {
@@ -72,7 +80,7 @@ export default {
       // 把后台拿到的数据渲染到页面中
       this.gender = data.gender;
       // 如果有头像就使用，如果是空字符串，就使用默认头像 现在的后台没有给图片 所以默认用我们的自己的图片
-      this.head_img = data.head_img || defaultImg;
+      this.head_img = data.head_img;
       this.nickname = data.nickname
       // 时间 通过slice截取 从0到第10位
       this.create_date = data.create_date.slice(0, 10);

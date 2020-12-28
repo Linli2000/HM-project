@@ -16,8 +16,13 @@
              alt="">
       </van-uploader> -->
       <van-uploader :after-read="afterRead">
-        <img class="avatar_image"
+        <img v-if="head_img"
+             class="avatar_image"
              :src="$baseURL+head_img"
+             alt="">
+        <img v-else
+             class="avatar_image"
+             src="@/assets/1.png"
              alt="">
       </van-uploader>
     </div>
@@ -51,7 +56,7 @@ export default {
   },
 
   methods: {
-    // 文件读取成功的回调函数  里面有一个默认的参数 可以直接在里面解构
+    // 文件读取成功的回调函数里面有一个默认的参数 可以直接在里面解构
     afterRead ({ content, file }) {
       //  this.head_img = content; 可以用来展示图片 不过只能用来展示
       // 我们项目中如何实现修改图片功能
@@ -68,7 +73,7 @@ export default {
         const head_img = res.data.data.url
         this.head_img = head_img
 
-        // 更新用户头像数据 上面只是把文件上传到服务器= 并没有真的实现文件上传 因为刷新就会不在 相当于在下面编辑最后要传送到总接口
+        // 更新用户头像数据 上面只是把文件上传到服务器 并没有真的实现文件上传 因为刷新就会不在 相当于在下面编辑最后要传送到总接口
         userUpdate({
           id: this.id,
           head_img: head_img,

@@ -11,7 +11,7 @@
       <van-button type="primary">个人中心页</van-button>
     </router-link>
     <router-link to="/useredit">
-      <van-button type="primary">其他</van-button>
+      <van-button type="primary">编辑资料</van-button>
     </router-link>
   </div>
 </template>
