@@ -31,6 +31,7 @@
     <van-cell-group>
       <van-cell title="昵称"
                 :value="nickname"
+                @click="nickNameShow=true"
                 is-link />
       <van-cell title="密码"
                 value="*****"
@@ -39,6 +40,14 @@
                 :value="gender === 0 ? '🤷‍♀️女' : '👦男'"
                 is-link />
     </van-cell-group>
+
+    <!-- 随便找个位置即可，因为最终是通过定位的方式显示到页面中 -->
+    <!-- 1.0 为修改昵称准备一个弹窗 -->
+    <van-dialog v-model="nickNameShow"
+                title="修改昵称"
+                show-cancel-button>
+      内容
+    </van-dialog>
   </div>
 </template>
 
@@ -48,6 +57,8 @@ import { userDetail, uploadFile, userUpdate } from '@/api'
 export default {
   data () {
     return {
+      nickNameShow: false,
+
       nickname: '',
       head_img: '',
       gender: 0,

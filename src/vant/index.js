@@ -4,8 +4,9 @@ import { Toast } from 'vant'
 import { Cell, CellGroup } from 'vant'
 import { NavBar } from 'vant'
 import { Uploader  } from 'vant'
+import { Dialog } from 'vant'
 
-
+Vue.use( Dialog)
 Vue.use(Uploader)
 Vue.use(NavBar)
 Vue.use(Cell)

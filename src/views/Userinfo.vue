@@ -48,6 +48,7 @@
       <van-cell title="设置"
                 is-link />
     </van-cell-group>
+
   </div>
 </template>
 
