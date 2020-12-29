@@ -89,3 +89,26 @@ export const removeUserFollowsById = (id) => {
     },
   })
 }
+
+//  栏目列表
+export const getCategory = () => {
+  return request({
+    method: 'GET',
+    url: `/category`,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}
+
+//  获取文章列表
+export const getPostList = (params) => {
+  return request({
+    method: 'GET',
+    url: `/post`,
+    params:params,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}

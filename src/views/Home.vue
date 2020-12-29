@@ -17,29 +17,10 @@
 
     <!-- 2.0 tabs 分类切换 -->
     <van-tabs v-model="activeIndex">
-      <van-tab title="标签 1">
+      <van-tab v-for="item in cateList "
+               :key="item.id"
+               :title="item.name">
         内容 6666666666
-      </van-tab>
-      <van-tab title="标签 2">
-        <h1>大标题</h1>
-      </van-tab>
-      <van-tab title="标签 3">
-        <h2>其他内容</h2>
-      </van-tab>
-      <van-tab title="标签 4">
-        <h3>现成的很棒</h3>
-      </van-tab>
-      <van-tab title="标签 5">
-        内容 6666666666
-      </van-tab>
-      <van-tab title="标签 6">
-        <h1>大标题</h1>
-      </van-tab>
-      <van-tab title="标签 7">
-        <h2>其他内容</h2>
-      </van-tab>
-      <van-tab title="标签 8">
-        <h3>现成的很棒</h3>
       </van-tab>
     </van-tabs>
 
@@ -47,19 +28,25 @@
 </template>
 
 <script>
+import { getCategory } from '@/api';
 export default {
   data () {
     return {
-      activeIndex: 0
+      activeIndex: 0,
+      cateList: []
     }
   },
 
   methods: {
 
   },
-
+  //每次页面加载就执行 mounted   用created也可以
   mounted () {
-
+    // 获取头部下面的导航栏
+    getCategory().then((res) => {
+      console.log(res);
+      this.cateList = res.data.data
+    })
   },
 }
 </script>
