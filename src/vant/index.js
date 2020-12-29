@@ -7,8 +7,10 @@ import { Uploader  } from 'vant'
 import { Dialog } from 'vant'
 import { Field } from 'vant'
 import { ActionSheet } from 'vant'
+import { Tab, Tabs } from 'vant'
 
-
+Vue.use(Tabs)
+Vue.use(Tab )
 Vue.use( ActionSheet )
 Vue.use( Field )
 Vue.use( Dialog)
