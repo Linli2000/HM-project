@@ -28,26 +28,42 @@
 </template>
 
 <script>
-import { getCategory } from '@/api';
+import { getCategory, getPostList } from '@/api';
 export default {
   data () {
     return {
       activeIndex: 0,
-      cateList: []
+      // tab栏的列表数据
+      cateList: [],
+      // 新闻列表的数据
+      postList: []
     }
   },
 
   methods: {
-
+    // 以后会用到多次 所以封装起来 方便后期使用
+    getPostListData () {
+      getPostList({
+        category: 999,
+        pageSize: 10,
+        pageIndex: 1
+      }).then((res) => {
+        // console.log(res);
+        this.postList = res.data.data
+      })
+    }
   },
   //每次页面加载就执行 mounted   用created也可以
   mounted () {
     // 获取头部下面的导航栏
     getCategory().then((res) => {
-      console.log(res);
+      // console.log(res);
       this.cateList = res.data.data
     })
+    // getPostListData 获取新闻列表
+    this.getPostListData();
   },
+
 }
 </script>
 
