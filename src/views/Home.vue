@@ -20,7 +20,8 @@
       <van-tab v-for="item in cateList "
                :key="item.id"
                :title="item.name">
-        内容 6666666666
+        <!-- 新闻列表 -->
+        <PostItem />
       </van-tab>
     </van-tabs>
 
@@ -29,7 +30,12 @@
 
 <script>
 import { getCategory, getPostList } from '@/api';
+import PostItem from '@/components/PostItem'
 export default {
+  // 组件注册
+  components: {
+    PostItem
+  },
   data () {
     return {
       activeIndex: 0,
