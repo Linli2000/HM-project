@@ -21,7 +21,11 @@
                :key="item.id"
                :title="item.name">
         <!-- 新闻列表 -->
-        <PostItem />
+
+        <!-- 循环遍历只是循环这个组件需要多少个 postList有多少个就会遍历出来多少个 然后postData是自己定义的 需要传送到子组件的值  item2 是遍历出来的每一项 -->
+        <PostItem v-for="item2 in item.postList"
+                  :key="item2.id"
+                  :postData="item2" />
       </van-tab>
     </van-tabs>
 
@@ -45,18 +49,16 @@ export default {
       postList: []
     }
   },
+  //  变量监听 监听上面tab栏的变化 如果变化就拿到监听变化到哪一个值上 就拿到他的索引 然后找索引里面的id发送请求
+  watch: {
+    activeIndex (index) {
+      // console.log(val);
+      const id = this.cateList[index].id;
 
-  methods: {
-    // 以后会用到多次 所以封装起来 方便后期使用
-    getPostListData () {
-      getPostList({
-        category: 999,
-        pageSize: 10,
-        pageIndex: 1
-      }).then((res) => {
-        // console.log(res);
-        this.postList = res.data.data
-      })
+      // 如果postlist 新闻列表那一项的数组长度为0 才发送新的请求 免得造成每次都发送
+      if (this.cateList[index].postList.length === 0) {
+        this.getPostListData(id)
+      }
     }
   },
   //每次页面加载就执行 mounted   用created也可以
@@ -64,11 +66,34 @@ export default {
     // 获取头部下面的导航栏
     getCategory().then((res) => {
       // console.log(res);
-      this.cateList = res.data.data
+
+      // 使用map先拿到每一项数据 (map映射)  给每一项先加一个postlist 加一个空数组
+      this.cateList = res.data.data.map((item) => {
+        return {
+          ...item,
+          postList: []
+        }
+      })
     })
     // getPostListData 获取新闻列表
     this.getPostListData();
   },
+  methods: {
+    // 以后会用到多次 所以封装起来 方便后期使用
+    getPostListData (id) {
+      getPostList({
+        category: id,
+        pageSize: 10,
+        pageIndex: 1
+      }).then((res) => {
+        // console.log(res);
+        // this.postList = res.data.data
+        // 把返回的数据直接添加到castlist里面 当前点击哪个tab栏就直接直接成为他的属性
+        this.cateList[this.activeIndex].postList = res.data.data;
+      })
+    }
+  },
+
 
 }
 </script>

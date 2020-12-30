@@ -11,12 +11,20 @@ import Attention from '@/views/Attention.vue'
 
 // 测试页面
 import Text from '@/dome/TestFollows.vue'
+import Router from '../dome/TextRouter.vue'
+
+
 import { getToken } from '@/utils/myToken'
 
 Vue.use(VueRouter)
 
 // 路由配置表 通过路径切换页面s
 const routes = [
+  {
+    path: '/router',
+    name: 'Router',
+    component:Router
+  } ,
   {
     path: '/text',
     name: 'Text',
