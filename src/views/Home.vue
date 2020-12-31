@@ -52,12 +52,9 @@ export default {
   //  变量监听 监听上面tab栏的变化 如果变化就拿到监听变化到哪一个值上 就拿到他的索引 然后找索引里面的id发送请求
   watch: {
     activeIndex (index) {
-      // console.log(val);
-      const id = this.cateList[index].id;
-
       // 如果postlist 新闻列表那一项的数组长度为0 才发送新的请求 免得造成每次都发送
       if (this.cateList[index].postList.length === 0) {
-        this.getPostListData(id)
+        this.getPostListData()
       }
     }
   },
@@ -74,21 +71,23 @@ export default {
           postList: []
         }
       })
+      // getPostListData 获取新闻列表 注意异步操作
+      this.getPostListData();
     })
-    // getPostListData 获取新闻列表
-    this.getPostListData();
   },
   methods: {
     // 以后会用到多次 所以封装起来 方便后期使用
-    getPostListData (id) {
+    getPostListData () {
+      // console.log(val);
+      const id = this.cateList[this.activeIndex].id;
       getPostList({
-        category: id,
-        pageSize: 10,
-        pageIndex: 1
+        category: id,  //分类id
+        pageSize: 5,//页容量
+        pageIndex: 1  //页码
       }).then((res) => {
         // console.log(res);
         // this.postList = res.data.data
-        // 把返回的数据直接添加到castlist里面 当前点击哪个tab栏就直接直接成为他的属性
+        // 把返回的数据直接添加到castlist里面 当前点击哪个tab栏就直接直接成为castlist他的属性
         this.cateList[this.activeIndex].postList = res.data.data;
       })
     }

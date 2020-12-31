@@ -42,7 +42,7 @@ import MyButton from '../components/MyButton.vue'
 // 导入封装的 "@/api/index.js" ，index.js 结尾可以简写成 "@/api" 即可。
 import { userRegister } from '@/api'
 // 引入自己封装好的后台接口
-import { userLogin  } from '../api/index.js'
+import { userLogin } from '../api/index.js'
 export default {
   // 注册组件
   components: {
