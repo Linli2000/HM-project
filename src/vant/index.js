@@ -8,7 +8,9 @@ import { Dialog } from 'vant'
 import { Field } from 'vant'
 import { ActionSheet } from 'vant'
 import { Tab, Tabs } from 'vant'
+import { List } from 'vant'
 
+Vue.use( List)
 Vue.use(Tabs)
 Vue.use(Tab )
 Vue.use( ActionSheet )

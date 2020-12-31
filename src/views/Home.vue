@@ -23,9 +23,16 @@
         <!-- 新闻列表 -->
 
         <!-- 循环遍历只是循环这个组件需要多少个 postList有多少个就会遍历出来多少个 然后postData是自己定义的 需要传送到子组件的值  item2 是遍历出来的每一项 -->
-        <PostItem v-for="item2 in item.postList"
-                  :key="item2.id"
-                  :postData="item2" />
+        <!-- van-list分页 包裹整个新闻列表 -->
+        <van-list v-model="item.loading"
+                  :finished="item.finished"
+                  finished-text="😀我也是有底线的"
+                  @load="loadMorePost">
+          <PostItem v-for="item2 in item.postList"
+                    :key="item2.id"
+                    :postData="item2" />
+        </van-list>
+
       </van-tab>
     </van-tabs>
 
@@ -46,7 +53,8 @@ export default {
       // tab栏的列表数据
       cateList: [],
       // 新闻列表的数据
-      postList: []
+      postList: [],
+
     }
   },
   //  变量监听 监听上面tab栏的变化 如果变化就拿到监听变化到哪一个值上 就拿到他的索引 然后找索引里面的id发送请求
@@ -63,12 +71,16 @@ export default {
     // 获取头部下面的导航栏
     getCategory().then((res) => {
       // console.log(res);
-
       // 使用map先拿到每一项数据 (map映射)  给每一项先加一个postlist 加一个空数组
       this.cateList = res.data.data.map((item) => {
         return {
           ...item,
-          postList: []
+          postList: [],
+          // 页码初始化的值 因为每一页的数据不一样  但是最开始展示的页码都是第一页 往下加载就是初始值+1 得到新页码里面的数据  比如说第一页是5条数据  第二页(页码)就是5-10(页容量)的数据
+          pageIndex: 1,
+          pageSize: 5,
+          loading: false,
+          finished: false
         }
       })
       // getPostListData 获取新闻列表 注意异步操作
@@ -76,19 +88,29 @@ export default {
     })
   },
   methods: {
+    // 分页的事件 
+    loadMorePost () {
+      console.log('aaa');
+      // 这页本来要加载完毕 即将加载下一页 就这页页码+1
+      this.cateList[this.activeIndex].pageIndex += 1;
+      this.getPostListData()
+    }
+    ,
     // 以后会用到多次 所以封装起来 方便后期使用
     getPostListData () {
       // console.log(val);
-      const id = this.cateList[this.activeIndex].id;
+      const { id, pageIndex, pageSize } = this.cateList[this.activeIndex];
       getPostList({
         category: id,  //分类id
-        pageSize: 5,//页容量
-        pageIndex: 1  //页码
+        pageSize: pageSize,//页容量
+        pageIndex: pageIndex  //页码
       }).then((res) => {
         // console.log(res);
         // this.postList = res.data.data
         // 把返回的数据直接添加到castlist里面 当前点击哪个tab栏就直接直接成为castlist他的属性
-        this.cateList[this.activeIndex].postList = res.data.data;
+        // this.cateList[this.activeIndex].postList = res.data.data;
+        // 因为如果不... 就会覆盖前面的值 而不是增加
+        this.cateList[this.activeIndex].postList.push(...res.data.data);
       })
     }
   },
