@@ -27,7 +27,8 @@
         <van-list v-model="item.loading"
                   :finished="item.finished"
                   finished-text="😀我也是有底线的"
-                  @load="loadMorePost">
+                  @load="loadMorePost"
+                  :immediate-check="false">
           <PostItem v-for="item2 in item.postList"
                     :key="item2.id"
                     :postData="item2" />
@@ -111,6 +112,14 @@ export default {
         // this.cateList[this.activeIndex].postList = res.data.data;
         // 因为如果不... 就会覆盖前面的值 而不是增加
         this.cateList[this.activeIndex].postList.push(...res.data.data);
+
+        // 加载完成就把loading的状态取消掉 固定用法
+        this.cateList[this.activeIndex].loading = false;
+        // 判断是不是已经加载完毕 如果已经加载完毕就可以结束分页了
+        if (this.cateList[this.activeIndex].postList.length == res.data.total) {
+          // 修改状态 显示文字
+          this.cateList[this.activeIndex].finished = true
+        }
       })
     }
   },
