@@ -45,6 +45,7 @@
                 is-link />
       <van-cell title="我的收藏"
                 value="文章/收藏"
+                to="/collect"
                 is-link />
       <van-cell title="设置"
                 is-link />

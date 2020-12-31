@@ -9,7 +9,7 @@ import Userinfo from '@/views/Userinfo.vue'
 import Useredit from '@/views/Useredit.vue'
 import Attention from '@/views/Attention.vue'
 import Collect from '@/views/Collect.vue'
-
+import Detail from '@/views/Detail.vue'
 
 
 
@@ -81,7 +81,12 @@ const routes = [
     meta: {
       isAuth: true,
     },
-  }
+  },
+  {
+    path: '/detail',
+    name: 'Detail',
+    component: Detail,
+  },
 ]
 
 const router = new VueRouter({

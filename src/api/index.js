@@ -112,3 +112,14 @@ export const getPostList = (params) => {
     },
   })
 }
+
+//  获取收藏文章列表
+export const getStarList = () => {
+  return request({
+    method: 'GET',
+    url: `/user_star`,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}
