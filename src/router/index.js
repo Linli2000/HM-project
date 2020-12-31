@@ -8,6 +8,10 @@ import Register from '@/views/Register.vue'
 import Userinfo from '@/views/Userinfo.vue'
 import Useredit from '@/views/Useredit.vue'
 import Attention from '@/views/Attention.vue'
+import Collect from '@/views/Collect.vue'
+
+
+
 
 // 测试页面
 import Text from '@/dome/TestFollows.vue'
@@ -70,6 +74,14 @@ const routes = [
       isAuth: true,
     },
   },
+  {
+    path: '/collect',
+    name: 'Collect',
+    component: Collect,
+    meta: {
+      isAuth: true,
+    },
+  }
 ]
 
 const router = new VueRouter({
