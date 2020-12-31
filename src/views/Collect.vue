@@ -35,6 +35,7 @@ export default {
     getStarList().then((res) => {
       console.log(res);
       // 存储数据
+      // 因为这个后台接口没有给  comment_length 这个属性 但是我们前面组件渲染的时候是用  comment_length 这个属性 所以我们可以选择添加这个属性 进行渲染数据
       this.list = res.data.data.map((item) => {
         return {
           // 展开对象 免得覆盖

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>wwww</h1>
+    Detail组件接收到的参数：{{ $route.params.id }}
   </div>
 </template>
 
