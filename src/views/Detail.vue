@@ -51,6 +51,7 @@
                 title="亲，你没有登录"
                 cancel-button-text="残忍拒绝"
                 confirm-button-text="去登录"
+                @confirm="goToLogin"
                 show-cancel-button>
     </van-dialog>
   </div>
@@ -69,17 +70,19 @@ export default {
   },
 
   methods: {
+    // 点赞
     postLikeHandle () {
       // 判断是否已经登录 如果没有登录 就跳出模态框
-      
       if (this.isLogin === false) {
         this.loginShow = true
+        // return 结束下面代码的执行 免得发送错误请求 因为一般情况下 没有登录就可以不用执行下面点赞的代码 也不要向后台发送请求 
+        return;
       }
       // console.log(11);
       // 已经登录 状态的点赞
       // 发送请求 用于更新数据
       updatePostLikeById(this.detailId).then((res) => {
-        // console.log('点赞的', res);
+        console.log(res);
         const { message } = res.data
         // 判断message的状态 看取消点赞的成功点赞的两个状态 更新页面可以看见的点赞个数
         // 可以根据点赞状态(has_like)去改变 上面的样式 如果has_like 这个属性为true 就可以添加active这个我们自己写的样式  为false 就为空 不添加样式  上面用三眼表达式写的
@@ -91,7 +94,20 @@ export default {
           this.detail.has_like = false
         }
       })
-    }
+    },
+    // 模态框的跳转
+    // 点击了确认，跳转去登录页
+    goToLogin () {
+      // 注意：原本的登录页，在登录成功后都是返回了个人中心，现在要完善登录成功后，返回原本的页面
+      // this.$router.push("/login");
+      this.$router.push({
+        // 固定用法，需要通过 name 指定登录页组件
+        name: "Login",
+        // 在跳转到登录页的时候，同时把当前页面的路径传递过去 
+        //  到前面login页面进行判断  如果有target值就跳到值里面的页面 如果没有就到登录页面
+        params: { target: this.$route.path },
+      });
+    },
   },
 
   mounted () {

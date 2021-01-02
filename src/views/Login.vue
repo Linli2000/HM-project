@@ -83,7 +83,13 @@ export default {
           //登录成功 给用户一个成功的提示
           this.$toast.success('欢迎入坑')
           // 通过 vue 路由跳转到 个人中心页
-          this.$router.push("/userinfo");
+          // this.$router.push("/userinfo");
+          if (this.$route.params.target) {
+            this.$router.replace(this.$route.params.target)
+          } else {
+            // 没有带值得话  就跳转到个人中心页面
+            this.$router.replace("/userinfo");
+          }
           // location.href 一般用于跳出当前项目的时候才使用  页面跳转一般使用$router.push
         } else {
           this.$toast.fail(res.data.message)
