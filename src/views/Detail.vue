@@ -44,20 +44,37 @@
         <span>微信</span>
       </div>
     </div>
+
+    <!-- 如果没有登录就跳出模态框 -->
+    <!-- Vant 的模态框 -->
+    <van-dialog v-model="loginShow"
+                title="亲，你没有登录"
+                cancel-button-text="残忍拒绝"
+                confirm-button-text="去登录"
+                show-cancel-button>
+    </van-dialog>
   </div>
 </template>
 
 <script>
 import { getPostById, updatePostLikeById } from '@/api';
+import { getToken } from '@/utils/myToken';
 export default {
   data () {
     return {
-      detail: {}
+      detail: {},
+      isLogin: false,
+      loginShow: false
     }
   },
 
   methods: {
     postLikeHandle () {
+      // 判断是否已经登录 如果没有登录 就跳出模态框
+      
+      if (this.isLogin === false) {
+        this.loginShow = true
+      }
       // console.log(11);
       // 已经登录 状态的点赞
       // 发送请求 用于更新数据
@@ -65,7 +82,7 @@ export default {
         // console.log('点赞的', res);
         const { message } = res.data
         // 判断message的状态 看取消点赞的成功点赞的两个状态 更新页面可以看见的点赞个数
-        // 可以根据点赞状态(has_like)去改变 上面的样式 如果has_like 这个属性为true 就可以添加active这个我们自己写的样式  为false 就为空 上面用三眼表达式写的
+        // 可以根据点赞状态(has_like)去改变 上面的样式 如果has_like 这个属性为true 就可以添加active这个我们自己写的样式  为false 就为空 不添加样式  上面用三眼表达式写的
         if (message === '点赞成功') {
           this.detail.like_length += 1
           this.detail.has_like = true
@@ -78,6 +95,8 @@ export default {
   },
 
   mounted () {
+    // 页面一加载就获取本地存储里面有没有token  判断用户有没有登录
+    this.isLogin = getToken() ? true : false
     // 通过路由传参 传过来的id
     const { id } = this.$route.params
     this.detailId = id
