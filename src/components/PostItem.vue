@@ -1,5 +1,5 @@
 <template>
-  <div @click="$router.push((`/detail/${postData.id}`))">
+  <div @click="$router.push(`/detail/${postData.id}`)">
     <!-- 通过 v-else-if 可以让执行效率更高 -->
     <!-- 情况1：如果文章 `type === 1` 而且 封面`数量在一到二之间`, 显示`单图片`布局。 -->
     <div class="single"

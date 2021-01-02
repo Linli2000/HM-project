@@ -84,7 +84,7 @@ const routes = [
   },
   {
     // 这里路由传参指的是前端的传参，不会引起向服务器发送请求，这里的传参指的是前端组件之间，进行传递参数，换句话说就是在url里传递参数
-    path:  '/detail/:id',
+    path: '/detail/:id',
     name: 'Detail',
     component: Detail,
   },

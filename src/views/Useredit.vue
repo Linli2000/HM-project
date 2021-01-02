@@ -141,7 +141,7 @@ export default {
           id: this.id,
           head_img: head_img,
         }).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.status == 200) {
             this.$toast.success("更新头像成功");
           }

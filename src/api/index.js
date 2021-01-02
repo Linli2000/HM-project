@@ -123,3 +123,25 @@ export const getStarList = () => {
     },
   })
 }
+
+// 获取文章列表
+export const getPostById= (id) => {
+  return request({
+    method: 'GET',
+    url: `/post/${id}`,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}
+
+// 获取点赞
+export const  updatePostLikeById= (id) => {
+  return request({
+    method: 'GET',
+    url: `/post_like/${id}`,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}

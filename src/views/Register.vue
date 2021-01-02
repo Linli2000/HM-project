@@ -80,7 +80,7 @@ export default {
         password: this.password,
         nickname: this.nickname,
       }).then((res) => {
-        // console.log(res);
+        console.log(res);
         // 错误的提示
         if (res.data.statusCode === 400) {
           this.$toast.fail(res.data.message)

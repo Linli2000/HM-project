@@ -66,7 +66,7 @@ export default {
       if (!this.username || !this.password) {
         return this.$toast('用户名或密码不能为空')
       }
-      // console.log(userLogin);
+      // console.log(userLogin); 
       // 准备发送请求所需的参数
       const data = { username: this.username, password: this.password }
       // 调用封装的登录接口函数，并且传递请求参数

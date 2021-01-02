@@ -40,7 +40,7 @@ export default {
         return {
           // 展开对象 免得覆盖
           ...item,
-          // 添加新的属性 
+          // 添加新的属性等于这个接口里面的值 在前面好渲染 避免报错 拿不到数据
           comment_length: item.comments.length
         }
       })
