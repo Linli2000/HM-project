@@ -9,9 +9,12 @@
       <!-- 关注按钮
         1. 用户没有关注的情况下，文字提示为：关注，红色的
         2. 已经关注的情况下，文字提示为：已关注，白色的
-      -->
-      <div class="follow_btn">
-        关注
+        用三元表达式进行判断
+  -->
+      <div class="follow_btn"
+           :class="detail.has_follow ? 'active' : ''"
+           @click="followHandle">
+        {{ detail.has_follow ? '已关注' : '关注' }}
       </div>
     </div>
     <!-- Detail组件接收到的参数： 路由传参{{ $route.params.id }} -->
@@ -29,7 +32,32 @@
     <!-- 情况2：type===2 的时候渲染视频详情 -->
     <div v-else-if="detail.type === 2"
          class="video">
-      <h1> 情况2：type===2 的时候渲染视频详情</h1>
+      <!-- 视频 -->
+      <video class="video_main"
+             controls
+             :poster="detail.cover[0].url"
+             src="https://video.pearvideo.com/mp4/adshort/20201231/cont-1714376-15555367_adpkg-ad_hd.mp4"></video>
+
+      <!-- 下面的文章 -->
+      <div class="author">
+        <div class="author_info">
+          <img v-if="detail.user.head_img"
+               :src="$baseURL + detail.user.head_img"
+               alt=""
+               class="author_avator">
+          <img v-else
+               src="@/assets/1.png"
+               alt=""
+               class="author_avator">
+          <span class="author_name">{{ detail.user.nickname }}</span>
+        </div>
+        <div class="follow_btn"
+             :class="detail.has_follow ? 'active' : ''"
+             @click="followHandle">
+          {{ detail.has_follow ? '已关注' : '关注' }}
+        </div>
+      </div>
+      <h1 class="video_title">{{ detail.title }}</h1>
     </div>
 
     <div class="btn_group">
@@ -58,7 +86,7 @@
 </template>
 
 <script>
-import { getPostById, updatePostLikeById } from '@/api';
+import { addUserFollowsById, getPostById, removeUserFollowsById, updatePostLikeById } from '@/api';
 import { getToken } from '@/utils/myToken';
 export default {
   data () {
@@ -70,19 +98,44 @@ export default {
   },
 
   methods: {
+    //  关注和未关注
+    followHandle () {
+      // 判断用户是否登录 如果有登录就进行下面代码的执行 没有就弹出模态框去login登录
+      if (this.isLogin === false) {
+        this.loginShow = true
+        return;
+      }
+      // 实现关注和取消功能
+      // 先拿到user的id 后台接口需要 关注和取消是两个接口
+      const userId = this.detail.user.id;
+
+      if (this.detail.has_follow === true) {
+        //  如果关注了就取消关注
+        removeUserFollowsById(userId).then((res) => {
+          // console.log(res);
+          this.$toast(res.data.message)
+          this.detail.has_follow = false
+        })
+      } else {
+        addUserFollowsById(userId).then((res) => {
+          this.$toast(res.data.message)
+          this.detail.has_follow = true
+        })
+      }
+    },
     // 点赞
     postLikeHandle () {
       // 判断是否已经登录 如果没有登录 就跳出模态框
       if (this.isLogin === false) {
         this.loginShow = true
-        // return 结束下面代码的执行 免得发送错误请求 因为一般情况下 没有登录就可以不用执行下面点赞的代码 也不要向后台发送请求 
+        // return 结束下面代码的执行 免得发送错误请求 因为一般情况下 没有登录就可以不用执行下面点赞的代码 也不要向后台发送请求  
         return;
       }
       // console.log(11);
       // 已经登录 状态的点赞
       // 发送请求 用于更新数据
       updatePostLikeById(this.detailId).then((res) => {
-        console.log(res);
+        // console.log(res);
         const { message } = res.data
         // 判断message的状态 看取消点赞的成功点赞的两个状态 更新页面可以看见的点赞个数
         // 可以根据点赞状态(has_like)去改变 上面的样式 如果has_like 这个属性为true 就可以添加active这个我们自己写的样式  为false 就为空 不添加样式  上面用三眼表达式写的
@@ -96,6 +149,7 @@ export default {
       })
     },
     // 模态框的跳转
+
     // 点击了确认，跳转去登录页
     goToLogin () {
       // 注意：原本的登录页，在登录成功后都是返回了个人中心，现在要完善登录成功后，返回原本的页面
@@ -117,15 +171,54 @@ export default {
     const { id } = this.$route.params
     this.detailId = id
     getPostById(id).then((res) => {
-      // console.log(res);
+      console.log(res);
       this.detail = res.data.data;
     });
   },
 }
 </script>
 
-<style lang = "less" scoped>
-/* / 按钮组 */
+
+<style lang="less" scoped>
+// 视频的布局
+.video {
+  .video_title {
+    font-size: 16px;
+    padding: 0 15px;
+    font-weight: normal;
+  }
+  .video_main {
+    width: 100%;
+    // 最大高度
+    max-height: 500px;
+  }
+
+  .author {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    .author_info {
+      display: flex;
+      align-items: center;
+      .author_avator {
+        width: 25px;
+        height: 25px;
+        object-fit: cover;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+      }
+
+      .author_name {
+        margin-left: 5px;
+        font-size: 13px;
+        color: #666;
+      }
+    }
+  }
+}
+// 按钮组
 .btn_group {
   display: flex;
   justify-content: space-evenly;
@@ -153,7 +246,7 @@ export default {
     color: #00c800;
   }
 }
-/* // 关注按钮到时候复用起来，所以样式定义到外面 */
+// 关注按钮到时候复用起来，所以样式定义到外面
 .follow_btn {
   width: 62px;
   height: 26px;
@@ -173,6 +266,26 @@ export default {
     color: #333;
   }
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 54px;
+  border-bottom: 1px solid #ccc;
+  padding: 0 15px;
+  .header_back {
+    display: flex;
+    align-items: center;
+    .iconjiantou2 {
+      font-size: 20px;
+    }
+
+    .iconnew {
+      font-size: 45px;
+      color: #ff0000;
+    }
+  }
+}
 .news {
   padding: 10px;
   .title {
@@ -188,7 +301,7 @@ export default {
     }
   }
 
-  /* // 🚩 /deep/ 深度修改，可以用于修改没有 data-v-xxx 元素的样式 */
+  // 🚩 /deep/ 深度修改，可以用于修改没有 data-v-xxx 元素的样式
   /* PS: 如果用 Sass 处理器深度修改样式用 >>> */
   /deep/ .content {
     .photo {
@@ -210,25 +323,6 @@ export default {
       margin: 10px 0;
       // 行高其实是用于掉多行文字的间距
       line-height: 1.5;
-    }
-  }
-}
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 54px;
-  border-bottom: 1px solid #ccc;
-  padding: 0 15px;
-  .header_back {
-    display: flex;
-    align-items: center;
-    .iconjiantou2 {
-      font-size: 20px;
-    }
-
-    .iconnew {
-      font-size: 45px;
     }
   }
 }
