@@ -145,3 +145,11 @@ export const  updatePostLikeById= (id) => {
     },
   })
 }
+
+// 根据 文章id 获取评论列表
+export const getPostCommentById = (id) => {
+  return request({
+    method: 'GET', // GET 请求
+    url: `/post_comment/${id}`, // 请求地址
+  })
+}

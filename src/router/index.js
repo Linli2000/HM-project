@@ -14,7 +14,7 @@ import Detail from '@/views/Detail.vue'
 
 
 // 测试页面
-import Text from '@/dome/TestFollows.vue'
+import Text from '@/dome/TestCommentDiguiPage.vue'
 import Router from '../dome/TextRouter.vue'
 
 

@@ -133,9 +133,9 @@ export default {
       }
       // console.log(11);
       // 已经登录 状态的点赞
-      // 发送请求 用于更新数据
+      // 发送点赞请求 用于更新数据
       updatePostLikeById(this.detailId).then((res) => {
-        // console.log(res);
+        console.log(res);
         const { message } = res.data
         // 判断message的状态 看取消点赞的成功点赞的两个状态 更新页面可以看见的点赞个数
         // 可以根据点赞状态(has_like)去改变 上面的样式 如果has_like 这个属性为true 就可以添加active这个我们自己写的样式  为false 就为空 不添加样式  上面用三眼表达式写的
