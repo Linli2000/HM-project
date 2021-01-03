@@ -1,8 +1,18 @@
 <template>
-  <div id="app">
+  <div class="parent ">
     <Parent v-if="parentData.parent"
             :parentData="parentData.parent" />
-    <h3>👨这是父评论{{parentData.content }}</h3>
+    <!-- <h3>👨这是父评论{{parentData.content }}</h3> -->
+
+    <div class="top">
+      <span class="nickname">{{ parentData.user.nickname }}</span>
+      <span class="create_date">{{ parentData.create_date.slice(0,10) }}</span>
+      <span class="reply">回复</span>
+    </div>
+
+    <div class="content">
+      {{ parentData.content }}
+    </div>
     <!-- 使用递归实现  在组件内部调用自己-->
   </div>
 </template>
@@ -29,9 +39,36 @@ export default {
 </script>
 
 <style lang = "less" scoped>
-#app {
-  border: 1px solid red;
-  margin: 3px;
+.parent {
+  border: 1px solid #aeaeab;
   padding: 3px;
+  padding: 3px;
+  .top {
+    /* background-color: pink; */
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    .nickname {
+      font-size: 14px;
+    }
+
+    .create_date {
+      flex: 1;
+      font-size: 12px;
+      color: #ccc;
+      margin-left: 10px;
+    }
+
+    .reply {
+      font-size: 13px;
+      color: #999;
+    }
+  }
+
+  .content {
+    padding: 0 10px;
+    line-height: 1.4;
+  }
 }
 </style>

@@ -73,6 +73,17 @@
       </div>
     </div>
 
+    <!-- 用于分隔模块的类名 -->
+    <div class="divider"></div>
+    <!-- 4.0 文章跟帖 -->
+    <!-- 4.0 文章跟帖 -->
+    <div class="comment">
+      <h2 class="comment_title">精彩跟帖</h2>
+      <!-- 使用父评论组件，v-for 渲染评论列表，组件内部自动渲染父评论 -->
+      <CommentMain v-for="item in commentList"
+                   :key="item.id"
+                   :commentData="item" />
+    </div>
     <!-- 如果没有登录就跳出模态框 -->
     <!-- Vant 的模态框 -->
     <van-dialog v-model="loginShow"
@@ -86,18 +97,26 @@
 </template>
 
 <script>
-import { addUserFollowsById, getPostById, removeUserFollowsById, updatePostLikeById } from '@/api';
+import { addUserFollowsById, getPostById, getPostCommentById, removeUserFollowsById, updatePostLikeById } from '@/api';
 import { getToken } from '@/utils/myToken';
+import CommentMain from "@/components/Comment/Main.vue";
+
 export default {
+  components: {
+    // 注册父评论组件
+    CommentMain,
+  },
   data () {
     return {
       detail: {},
       isLogin: false,
-      loginShow: false
+      loginShow: false,
+      commentList: [],
     }
   },
 
   methods: {
+
     //  关注和未关注
     followHandle () {
       // 判断用户是否登录 如果有登录就进行下面代码的执行 没有就弹出模态框去login登录
@@ -171,8 +190,13 @@ export default {
     const { id } = this.$route.params
     this.detailId = id
     getPostById(id).then((res) => {
-      console.log(res);
+      // console.log(res);
       this.detail = res.data.data;
+    });
+    // 获取评论列表
+    getPostCommentById(this.detailId).then((res) => {
+      console.log("getPostCommentById", res.data);
+      this.commentList = res.data.data;
     });
   },
 }
