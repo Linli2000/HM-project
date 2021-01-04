@@ -3,14 +3,13 @@
     <Parent v-if="parentData.parent"
             :parentData="parentData.parent" />
     <!-- <h3>👨这是父评论{{parentData.content }}</h3> -->
-
     <div class="top">
       <span class="nickname">{{ parentData.user.nickname }}</span>
       <span class="create_date">{{ parentData.create_date.slice(0,10) }}</span>
       <span class="reply">回复</span>
     </div>
 
-    <div class="content">
+    <div class="content">这是父评论:
       {{ parentData.content }}
     </div>
     <!-- 使用递归实现  在组件内部调用自己-->
@@ -43,8 +42,8 @@ export default {
   border: 1px solid #aeaeab;
   padding: 3px;
   padding: 3px;
+  background-color: #ffffee;
   .top {
-    /* background-color: pink; */
     height: 30px;
     display: flex;
     align-items: center;

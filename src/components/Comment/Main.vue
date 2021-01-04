@@ -1,5 +1,19 @@
 <template>
   <div id="app">
+    <div class="top">
+      <img v-if="commentData.user.head_img"
+           class="avator"
+           :src="$baseURL+commentData.user.head_img"
+           alt="">
+      <img class="avator"
+           src="@/assets/1.png"
+           alt="">
+      <div class="info">
+        <div class="nickname">{{commentData.user.nickname}}</div>
+        <div class="create_date">{{commentData.create_date.slice(0,10)}}</div>
+      </div>
+    </div>
+
     <CommentParent v-if="commentData.parent"
                    :parentData="commentData.parent" />
     <h3>🤞这是主评论{{commentData.content }}</h3>
@@ -31,4 +45,38 @@ export default {
 </script>
 
 <style lang = "less" scoped>
+#app {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  .top {
+    display: flex;
+    .avator {
+      width: 25px;
+      height: 25px;
+      object-fit: cover;
+      margin-right: 5px;
+      border: 1px solid #cccc;
+      border-radius: 50%;
+    }
+    .info {
+      flex: 1;
+      .nickname {
+        font-size: 14px;
+      }
+      .create_date {
+        margin-top: 3px;
+        font-size: 12px;
+        color: #ccc;
+      }
+    }
+    .reply {
+      color: #999;
+      font-size: 13px;
+    }
+  }
+  .content {
+    margin-top: 5px;
+    line-height: 1.4;
+  }
+}
 </style>
