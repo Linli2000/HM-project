@@ -89,7 +89,8 @@
                      :key="item.id"
                      :commentData="item" />
         <!--  如果有东西 就截取3条 然后展示页面底部的更多跟帖 -->
-        <span class="comment_more">更多跟帖</span>
+        <span class="comment_more"
+              @click="$router.push(`/comment/${detailId}`)">更多跟帖</span>
       </div>
       <!-- 情况2 没有数据 就提示这没有 显示为空 -->
       <div v-else

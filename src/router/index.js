@@ -10,7 +10,7 @@ import Useredit from '@/views/Useredit.vue'
 import Attention from '@/views/Attention.vue'
 import Collect from '@/views/Collect.vue'
 import Detail from '@/views/Detail.vue'
-
+import Comment from '@/views/Comment.vue'
 
 
 // 测试页面
@@ -87,6 +87,13 @@ const routes = [
     path: '/detail/:id',
     name: 'Detail',
     component: Detail,
+  },
+  ,
+  {
+    // 这里路由传参指的是前端的传参，不会引起向服务器发送请求，这里的传参指的是前端组件之间，进行传递参数，换句话说就是在url里传递参数
+    path: '/comment/:id',
+    name: 'Comment',
+    component: Comment,
   },
 ]
 
