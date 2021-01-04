@@ -79,10 +79,24 @@
     <!-- 4.0 文章跟帖 -->
     <div class="comment">
       <h2 class="comment_title">精彩跟帖</h2>
-      <!-- 使用父评论组件，v-for 渲染评论列表，组件内部自动渲染父评论 -->
-      <CommentMain v-for="item in commentList"
-                   :key="item.id"
-                   :commentData="item" />
+
+      <!-- 因为有两种情况 有一种是没有评论的 就不需要展示 可以提醒用户没有评论  -->
+      <!-- 情况1 如果有长度就可以显示内容 -->
+      <div class="comment_list"
+           v-if="commentList.length>0">
+        <!-- 使用父评论组件，v-for 渲染评论列表，组件内部自动渲染父评论 -->
+        <CommentMain v-for="item in commentList"
+                     :key="item.id"
+                     :commentData="item" />
+        <!--  如果有东西 就截取3条 然后展示页面底部的更多跟帖 -->
+        <span class="comment_more">更多跟帖</span>
+      </div>
+      <!-- 情况2 没有数据 就提示这没有 显示为空 -->
+      <div v-else
+           class="comment_empty">
+        暂无跟帖 让我看看谁是第一个🧐
+      </div>
+
     </div>
     <!-- 如果没有登录就跳出模态框 -->
     <!-- Vant 的模态框 -->
@@ -196,7 +210,8 @@ export default {
     // 获取评论列表
     getPostCommentById(this.detailId).then((res) => {
       console.log("getPostCommentById", res.data);
-      this.commentList = res.data.data;
+      // slice 截取后台数据 我们现在只要3条 避免页面过长 如果需要可以点击下面的精彩跟帖跳转再加载
+      this.commentList = res.data.data.slice(0, 3);
     });
   },
 }
@@ -204,6 +219,38 @@ export default {
 
 
 <style lang="less" scoped>
+.comment {
+  background-color: #f8fcff;
+}
+.comment_title {
+  font-size: 16px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.comment_list {
+  padding-bottom: 50px;
+  .comment_more {
+    width: 120px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 0;
+    font-size: 13px;
+  }
+}
+// 空列表
+.comment_empty {
+  font-size: 13px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 // 视频的布局
 .video {
   .video_title {
