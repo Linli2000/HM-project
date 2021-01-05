@@ -98,6 +98,9 @@
         暂无跟帖 让我看看谁是第一个🧐
       </div>
 
+      <!-- 5.0 底部的评论回复组件 -->
+      <CommentSend />
+
     </div>
     <!-- 如果没有登录就跳出模态框 -->
     <!-- Vant 的模态框 -->
@@ -115,11 +118,13 @@
 import { addUserFollowsById, getPostById, getPostCommentById, removeUserFollowsById, updatePostLikeById } from '@/api';
 import { getToken } from '@/utils/myToken';
 import CommentMain from "@/components/Comment/Main.vue";
-
+import CommentSend from "@/components/Comment/Send.vue";
 export default {
   components: {
     // 注册父评论组件
     CommentMain,
+    // 注册底部自己写评论的组件
+    CommentSend
   },
   data () {
     return {
