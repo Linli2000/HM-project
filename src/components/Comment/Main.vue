@@ -12,6 +12,8 @@
         <div class="nickname">{{commentData.user.nickname}}</div>
         <div class="create_date">{{commentData.create_date.slice(0,10)}}</div>
       </div>
+      <span class="reply"
+            @click="replyHandle">回复</span>
     </div>
 
     <CommentParent v-if="commentData.parent"
@@ -23,6 +25,9 @@
 <script>
 // 引入parent 组件  让数据在一个页面显示
 import CommentParent from '../Comment/Parent.vue'
+
+// 导入事件总线
+import Bus from "@/utils/Bus"
 export default {
   props: ["commentData"],
   components: {
@@ -35,7 +40,10 @@ export default {
   },
 
   methods: {
-
+    replyHandle () {
+      // 点击回复的时候就向另外一个组件发请求  后面的id 是为了让你知道 点击的是哪一条评论的回复
+      Bus.$emit("sendComment", this.commentData.id)
+    }
   },
 
   mounted () {

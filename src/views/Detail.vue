@@ -99,7 +99,7 @@
       </div>
 
       <!-- 5.0 底部的评论回复组件 -->
-      <CommentSend />
+      <CommentSend :detailId="detailId" />
 
     </div>
     <!-- 如果没有登录就跳出模态框 -->
@@ -128,10 +128,11 @@ export default {
   },
   data () {
     return {
-      detail: {},
+      detail: [],
       isLogin: false,
       loginShow: false,
       commentList: [],
+      detailId: 0
     }
   },
 
@@ -226,6 +227,7 @@ export default {
 
 <style lang="less" scoped>
 .comment {
+  padding-bottom: 120px;
   background-color: #f8fcff;
 }
 .comment_title {

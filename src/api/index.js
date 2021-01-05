@@ -153,3 +153,15 @@ export const getPostCommentById = (id) => {
     url: `/post_comment/${id}`, // 请求地址
   })
 }
+
+// 发布评论 - 增加
+export const addPostComment = ({ id, ...data }) => {
+  return request({
+    method: 'POST', // GET 请求
+    url: `/post_comment/${id}`, // 请求地址
+    data: data,
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}

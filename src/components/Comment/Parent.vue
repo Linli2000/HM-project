@@ -6,7 +6,8 @@
     <div class="top">
       <span class="nickname">{{ parentData.user.nickname }}</span>
       <span class="create_date">{{ parentData.create_date.slice(0,10) }}</span>
-      <span class="reply">回复</span>
+      <span class="reply"
+            @click="replyHandle">回复</span>
     </div>
 
     <div class="content">这是父评论:
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import Bus from '@/utils/Bus'
 export default {
   // 组件内部调用需要用name注册 才能使用 固定写法
   name: 'Parent',
@@ -28,7 +30,9 @@ export default {
   },
 
   methods: {
-
+    replyHandle () {
+      Bus.$emit("sendComment", this.parentData.id)
+    }
   },
 
   mounted () {
