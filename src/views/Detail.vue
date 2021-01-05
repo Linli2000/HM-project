@@ -99,7 +99,8 @@
       </div>
 
       <!-- 5.0 底部的评论回复组件 -->
-      <CommentSend :detailId="detailId" />
+      <CommentSend @updataComment="getPostCommentData"
+                   :detailId="detailId" />
 
     </div>
     <!-- 如果没有登录就跳出模态框 -->
@@ -202,6 +203,16 @@ export default {
         params: { target: this.$route.path },
       });
     },
+
+    // 封装获取评论列表
+    getPostCommentData () {
+      // 获取评论列表
+      getPostCommentById(this.detailId).then((res) => {
+        console.log("getPostCommentById", res.data);
+        // slice 截取后台数据 我们现在只要3条 避免页面过长 如果需要可以点击下面的精彩跟帖跳转再加载
+        this.commentList = res.data.data.slice(0, 3);
+      });
+    }
   },
 
   mounted () {
@@ -214,12 +225,7 @@ export default {
       // console.log(res);
       this.detail = res.data.data;
     });
-    // 获取评论列表
-    getPostCommentById(this.detailId).then((res) => {
-      console.log("getPostCommentById", res.data);
-      // slice 截取后台数据 我们现在只要3条 避免页面过长 如果需要可以点击下面的精彩跟帖跳转再加载
-      this.commentList = res.data.data.slice(0, 3);
-    });
+    this.getPostCommentData();
   },
 }
 </script>

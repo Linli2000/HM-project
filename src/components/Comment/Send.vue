@@ -64,15 +64,16 @@ export default {
       // }, 5000)
       // 将传入的回调函数延迟到下次 DOM (DOM是操作元素的属性和值  DOM元素的一写就运行了) 新循环之后执行。 
       // 在执行点击显示文本框之后 再执行这个this.$refs.textarea_dom.focus()
-      // this.$nextTick(() => {
-      //   // 文本域显示之后才能获取焦点  不能对隐藏的元素进行dom炒作
-      //   this.$refs.textarea_dom.focus()
-      // })
+      this.$nextTick(() => {
+        // 文本域显示之后才能获取焦点  不能对隐藏的元素进行dom炒作
+        this.$refs.textarea_dom.focus()
+      })
     },
     // 隐藏文本域
     hideTextAreaHandle () {
       setTimeout(() => {
         this.isShowTextarea = true;
+        this.parent_id = "";
       }, 50);
     },
     // 点击发送按钮 - 发送评论
@@ -82,7 +83,7 @@ export default {
       // 调用api
       // 调用 api 中封装的添加评论接口
       addPostComment({
-        // 文章id：注意需要通过父传子传递过来
+        // 文章id：注意需要通过父传子传递过来`1
         id: this.detailId,
         // 评论内容：从文本域中获取
         content: this.content,
@@ -94,6 +95,9 @@ export default {
         this.$toast(res.data.message);
         // 体验优化：回复成功后，清空文本域内容
         this.content = "";
+
+        // 向父组件发送事件 重新获取评论列表
+        this.$emit("updataComment")
       });
     },
   },
@@ -105,7 +109,7 @@ export default {
       // 把获取到的id 存储起来 后台接口需要
       this.parent_id = id
       //  就显示文本框
-      this.isShowTextarea = false
+      this.showTextAreaHandle()
     })
   },
 }

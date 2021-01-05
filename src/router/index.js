@@ -11,6 +11,7 @@ import Attention from '@/views/Attention.vue'
 import Collect from '@/views/Collect.vue'
 import Detail from '@/views/Detail.vue'
 import Comment from '@/views/Comment.vue'
+import UserComment from '@/views/UserComment.vue'
 
 
 // 测试页面
@@ -94,6 +95,14 @@ const routes = [
     path: '/comment/:id',
     name: 'Comment',
     component: Comment,
+  },
+  {
+    path: '/usercomment', // 注意这里使用动态路由
+    name: 'UserComment',
+    component: UserComment,
+    meta: {
+      isAuth: true,
+    },
   },
 ]
 

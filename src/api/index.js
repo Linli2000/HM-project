@@ -165,3 +165,14 @@ export const addPostComment = ({ id, ...data }) => {
     },
   })
 }
+
+// 获取用户评论列表
+export const getUserComment = () => {
+  return request({
+    method: 'GET', // GET 请求
+    url: `/user_comments/`, // 请求地址
+    headers: {
+      Authorization: getToken(),
+    },
+  })
+}

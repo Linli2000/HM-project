@@ -42,6 +42,7 @@
                 is-link />
       <van-cell title="我的跟帖"
                 value="跟帖/回复"
+                to="/usercomment"
                 is-link />
       <van-cell title="我的收藏"
                 value="文章/收藏"
