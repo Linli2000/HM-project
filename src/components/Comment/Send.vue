@@ -43,11 +43,16 @@ export default {
     showTextAreaHandle () {
       // 一开始输入框的值为true显示输入框  当点击之后值就为false 输入框就隐藏了 然后文本域取反 文本域的值就为true
       this.isShowTextarea = false;
-      // 不能对影藏的袁术获取焦点 我们需要延迟 等他放出来之后在获取 更新我们看见的
-      setTimeout(() => {
+      // 不能对影藏的元素获取焦点  数据更新了但是由于元素的隐藏的 不能对隐藏元素获取焦点  所以我们需要延迟 等他放出来多少m之后在获取 更新我们看见的
+      // setTimeout(() => {
+      //   this.$refs.textarea_dom.focus()
+      // }, 50)
+      // 将传入的回调函数延迟到下次 DOM (DOM是操作元素的属性和值  DOM元素的一写就运行了) 新循环之后执行。 
+      // 在执行点击显示文本框之后 再执行这个this.$refs.textarea_dom.focus()
+      this.$nextTick(() => {
+        // 文本域显示之后才能获取焦点  不能对隐藏的元素进行dom炒作
         this.$refs.textarea_dom.focus()
-      }, 50)
-
+      })
     }
   },
 
