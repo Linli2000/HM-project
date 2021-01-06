@@ -25,7 +25,8 @@
       </h3>
       <ul class="list"
           v-for=" (item ,index) in history"
-          :key="index">
+          :key="index"
+          @click="historySearchHandle(item)">
         <li>{{item}}</li>
 
       </ul>
@@ -87,8 +88,17 @@ export default {
     this.$refs.search_dom.focus()
     //  获取历史记录  history 等于获取到的值 然后在上面循环渲染
     this.history = getHistory();
+
   },
   methods: {
+
+    // 根据历史内容点击搜索
+    historySearchHandle (item) {
+      // 把拿到的数据更新到data的keyword中
+      this.keyword = item,
+        // 然后重新调用搜索事件
+        this.SearchHander()
+    },
     // 清楚历史记录
     clearHistoryHandle () {
       // 清空 data 的数据，更新视图
