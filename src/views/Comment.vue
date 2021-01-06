@@ -11,6 +11,7 @@
                      :key="item.id"
                      :commentData="item" />
       </div>
+
     </div>
   </div>
 </template>
@@ -18,6 +19,7 @@
 <script>
 // 导入组件 就是评论总页面
 import CommentMain from "@/components/Comment/Main"
+
 import { getPostCommentById } from '@/api'
 export default {
   components: {

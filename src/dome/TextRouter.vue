@@ -1,38 +1,33 @@
 <template>
-  <div id="app">
-    <h1>这是首页</h1>
-    <router-link to="/login">
-      <van-button type="primary">登录页</van-button>
-    </router-link>
-    <router-link to="/register">
-      <van-button type="primary">注册页</van-button>
-    </router-link>
-    <router-link to="/Userinfo">
-      <van-button type="primary">个人中心页</van-button>
-    </router-link>
-    <router-link to="/useredit">
-      <van-button type="primary">编辑资料</van-button>
-    </router-link>
-  </div>
+  <section>
+    <div ref="hello">
+      <h1>Hello World ~</h1>
+    </div>
+    <button type="danger"
+            @click="get">点击</button>
+  </section>
 </template>
-
 <script>
 export default {
-  data () {
-    return {
-
+  methods: {
+    get () {
     }
   },
-
-  methods: {
-
-  },
-
   mounted () {
-
+    console.log(333);
+    console.log(this.$refs['hello']);
+    this.$nextTick(() => {
+      console.log(444);
+      console.log(this.$refs['hello']);
+    });
   },
+  created () {
+    console.log(111);
+    console.log(this.$refs['hello']);
+    this.$nextTick(() => {
+      console.log(222);
+      console.log(this.$refs['hello']);
+    });
+  }
 }
 </script>
-
-<style lang = "less" scoped>
-</style>

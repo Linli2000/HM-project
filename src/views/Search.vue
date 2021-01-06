@@ -1,0 +1,200 @@
+<template>
+  <div class="search">
+    <!-- 头部布局 -->
+    <div class="header">
+      <i class="iconfont iconjiantou2"></i>
+      <div class="search_in">
+        <i class="iconfont iconsearch"></i>
+        <input type="text"
+               placeholder="血条消失之术"
+               v-model="keyword"
+               @keyup.enter="SearchHander"
+               ref="search_dom"
+               class="search_input" />
+      </div>
+      <p class="search_btn"
+         @click="SearchHander">搜索</p>
+    </div>
+    <!-- 历史记录 -->
+    <div class="history">
+      <h3 class="title">
+        <span>历史记录</span>
+        <span>清除记录</span>
+      </h3>
+      <ul class="list">
+        <li>仙女姐姐</li>
+        <li>神仙姐姐</li>
+      </ul>
+    </div>
+    <!-- 热门搜索 -->
+    <div class="hot">
+      <h3 class="title">热门搜索</h3>
+      <ul class="list">
+        <li>前端58期</li>
+        <li>前端58期</li>
+        <li>前端58期</li>
+        <li>前端58期</li>
+        <li>前端58期</li>
+        <li>前端58期</li>
+      </ul>
+    </div>
+    <!-- 搜索提示 -->
+    <ul class="tips"
+        v-show="isShowTips"
+        v-for="item in list"
+        :key="item.id">
+      <li class="tips_item">
+        <span class="tips_title">{{item.title}}</span>
+        <i class="iconfont iconjiantou1"></i>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import { getPostSearch } from '@/api';
+// import { List } from 'node_modules/_vant@2.12.0@vant/types';
+export default {
+  data () {
+    return {
+      isShowTips: false,
+      keyword: '',
+      list: []
+    };
+  },
+  // 一直监听
+  watch: {
+    // 监听关键词的变化 
+    keyword (val) {
+      // 如果为空，关闭提示盒子
+      if (val === "") {
+        this.isShowTips = false;
+      }
+    },
+  },
+  // 页面加载完毕就渲染的
+  mounted () {
+    this.$refs.search_dom.focus()
+  },
+  methods: {
+    SearchHander () {
+      getPostSearch({
+        keyword: this.keyword,
+        pagesSize: 5
+      }).then((res) => {
+        console.log(res);
+        this.list = res.data.data
+        this.isShowTips = true
+      })
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.search {
+  background-color: #f2f2f2;
+  // 头部
+  .header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    .iconjiantou2 {
+      font-size: 14px;
+    }
+
+    .search_in {
+      flex: 1;
+      display: flex;
+      margin: 0 10px;
+      position: relative;
+      .iconsearch {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 18px;
+        color: #999;
+      }
+
+      input {
+        flex: 1;
+        height: 40px;
+        border: 1px solid #666;
+        border-radius: 20px;
+        background-color: transparent;
+        font-size: 14px;
+        padding-left: 35px;
+      }
+    }
+
+    p {
+      font-size: 14px;
+      color: #333;
+    }
+  }
+  // 历史记录
+  .history {
+    margin-top: 10px;
+    padding: 0 10px;
+    border-bottom: 1px solid #000;
+    .title {
+      font-weight: normal;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      li {
+        width: 25%;
+        margin: 10px 0;
+        font-size: 10px;
+      }
+    }
+  }
+  // 热门搜索
+  .hot {
+    padding: 0 10px;
+    margin-top: 10px;
+    h3 {
+      font-weight: normal;
+      font-size: 13px;
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      li {
+        width: 50%;
+        margin: 10px 0;
+        font-size: 10px;
+      }
+    }
+  }
+  // 搜索提示
+  .tips {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 63px;
+    bottom: 0;
+    background-color: #f2f2f2;
+    .tips_item {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+      margin: 10px;
+      height: 50px;
+      align-items: center;
+      justify-content: space-between;
+      .tips_title {
+        font-size: 15px;
+      }
+
+      .iconjiantou1 {
+        color: #999;
+      }
+    }
+  }
+}
+</style>

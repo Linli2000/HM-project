@@ -12,7 +12,7 @@ import Collect from '@/views/Collect.vue'
 import Detail from '@/views/Detail.vue'
 import Comment from '@/views/Comment.vue'
 import UserComment from '@/views/UserComment.vue'
-
+import Search from '@/views/Search.vue'
 
 // 测试页面
 import Text from '@/dome/TestCommentDiguiPage.vue'
@@ -103,6 +103,11 @@ const routes = [
     meta: {
       isAuth: true,
     },
+  },
+  {
+    path: '/search', 
+    name: 'Search',
+    component: Search,
   },
 ]
 

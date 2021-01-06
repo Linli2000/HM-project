@@ -176,3 +176,11 @@ export const getUserComment = () => {
     },
   })
 }
+//搜索文章列表
+export const getPostSearch = (params) => {
+  return request({
+      method: 'GET',
+      url: `/post_search/`,
+      params: params,
+  })
+}

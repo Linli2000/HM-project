@@ -58,6 +58,7 @@ export default {
     showTextAreaHandle () {
       // 一开始输入框的值为true显示输入框  当点击之后值就为false 输入框就隐藏了 然后文本域取反 文本域的值就为true
       this.isShowTextarea = false;
+      // 数据发生变化, 到页面正式更新是有一个间距
       // 不能对影藏的元素获取焦点  数据更新了但是由于元素的隐藏的 不能对隐藏元素获取焦点  所以我们需要等他显示后 延迟 等上面元素出来之后多少m之后在获取 更新我们看见的
       // setTimeout(() => {
       //   this.$refs.textarea_dom.focus()
