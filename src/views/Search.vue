@@ -2,7 +2,8 @@
   <div class="search">
     <!-- 头部布局 -->
     <div class="header">
-      <i class="iconfont iconjiantou2"></i>
+      <i class="iconfont iconjiantou2"
+         @click="backHandle"></i>
       <div class="search_in">
         <i class="iconfont iconsearch"></i>
         <input type="text"
@@ -21,9 +22,11 @@
         <span>历史记录</span>
         <span>清除记录</span>
       </h3>
-      <ul class="list">
-        <li>仙女姐姐</li>
-        <li>神仙姐姐</li>
+      <ul class="list"
+          v-for=" (item ,index) in history"
+          :key="index">
+        <li>{{item}}</li>
+
       </ul>
     </div>
     <!-- 热门搜索 -->
@@ -53,13 +56,14 @@
 
 <script>
 import { getPostSearch } from '@/api';
-// import { List } from 'node_modules/_vant@2.12.0@vant/types';
+import { setHistory, getHistory, removeHistory } from "@/utils/local"
 export default {
   data () {
     return {
       isShowTips: false,
       keyword: '',
-      list: []
+      list: [],
+      history: [],
     };
   },
   // 一直监听
@@ -75,18 +79,40 @@ export default {
   // 页面加载完毕就渲染的
   mounted () {
     this.$refs.search_dom.focus()
+    //  获取历史记录
+    this.history = getHistory();
   },
   methods: {
+    // 点击搜索事件
     SearchHander () {
+
+      if (this.keyword === "") {
+        return this.$toast("请输入内容哦...");
+      }
       getPostSearch({
         keyword: this.keyword,
         pagesSize: 5
       }).then((res) => {
-        console.log(res);
-        this.list = res.data.data
-        this.isShowTips = true
+        // console.log(res),
+        this.list = res.data.data,
+          this.isShowTips = true,
+          this.history.unshift(this.keyword)
+        // ... 展开运算符，可以把对象或者数组展开成逗号分隔的数据
+        this.history = [...new Set(this.history)];
+        setHistory(this.history)
       })
-    }
+    },
+
+    // 点击返回按钮
+    backHandle () {
+      // 如果有搜索关键词，清空搜索关键词
+      if (this.keyword) {
+        this.keyword = "";
+      } else {
+        // 没有搜索关键词实现返回
+        this.$router.back();
+      }
+    },
   }
 };
 </script>
