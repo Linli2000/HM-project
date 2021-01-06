@@ -17,10 +17,11 @@
          @click="SearchHander">搜索</p>
     </div>
     <!-- 历史记录 -->
-    <div class="history">
+    <div class="history"
+         v-show="history.length">
       <h3 class="title">
         <span>历史记录</span>
-        <span>清除记录</span>
+        <span @click="clearHistoryHandle">清除记录</span>
       </h3>
       <ul class="list"
           v-for=" (item ,index) in history"
@@ -75,17 +76,28 @@ export default {
         this.isShowTips = false;
       }
     },
+
+    // 监听history的值
+    history (val) {
+      setHistory(val)
+    }
   },
   // 页面加载完毕就渲染的
   mounted () {
     this.$refs.search_dom.focus()
-    //  获取历史记录
+    //  获取历史记录  history 等于获取到的值 然后在上面循环渲染
     this.history = getHistory();
   },
   methods: {
+    // 清楚历史记录
+    clearHistoryHandle () {
+      // 清空 data 的数据，更新视图
+      this.history = [];
+      //  清空 本地存储数据，下次进来就没有了
+      // removeHistory();
+    },
     // 点击搜索事件
     SearchHander () {
-
       if (this.keyword === "") {
         return this.$toast("请输入内容哦...");
       }
@@ -94,12 +106,14 @@ export default {
         pagesSize: 5
       }).then((res) => {
         // console.log(res),
-        this.list = res.data.data,
-          this.isShowTips = true,
-          this.history.unshift(this.keyword)
+        this.list = res.data.data;
+        this.isShowTips = true;
+        // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。
+        this.history.unshift(this.keyword)
         // ... 展开运算符，可以把对象或者数组展开成逗号分隔的数据
         this.history = [...new Set(this.history)];
-        setHistory(this.history)
+        // 设置 保存历史记录  history传递的值 前面有转化
+        // setHistory(this.history)
       })
     },
 

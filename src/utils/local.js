@@ -1,7 +1,7 @@
 // 搜索历史记录的 键名称
 const HMTT_HISTORY = 'HMTT_HISTORY'
 
-// 设置历史记录
+// 设置 保存历史记录
 export const setHistory = (array) =>
   localStorage.setItem(HMTT_HISTORY, JSON.stringify(array))
 
