@@ -45,10 +45,11 @@
     </div>
     <!-- 搜索提示 -->
     <ul class="tips"
-        v-show="isShowTips"
-        v-for="item in list"
-        :key="item.id">
-      <li class="tips_item">
+        v-show="isShowTips">
+      <li class="tips_item"
+          @click="$router.push(`/detail/${item.id}`)"
+          v-for="item in list"
+          :key="item.id">
         <span class="tips_title">{{item.title}}</span>
         <i class="iconfont iconjiantou1"></i>
       </li>
@@ -78,7 +79,7 @@ export default {
       }
     },
 
-    // 监听history的值
+    // 监听history的值  相当于监听keyword的值
     history (val) {
       setHistory(val)
     }
@@ -86,7 +87,8 @@ export default {
   // 页面加载完毕就渲染的
   mounted () {
     this.$refs.search_dom.focus()
-    //  获取历史记录  history 等于获取到的值 然后在上面循环渲染
+    //  获取历史记录  history
+    // 等于获取到的值 然后在上面循环渲染
     this.history = getHistory();
 
   },

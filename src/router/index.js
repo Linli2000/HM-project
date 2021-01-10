@@ -13,11 +13,13 @@ import Detail from '@/views/Detail.vue'
 import Comment from '@/views/Comment.vue'
 import UserComment from '@/views/UserComment.vue'
 import Search from '@/views/Search.vue'
+import Manage from '@/views/Manage.vue'
 
 // 测试页面
 import Text from '@/dome/TestCommentDiguiPage.vue'
 import Router from '../dome/TextRouter.vue'
-
+import SlotDome from '../dome/slotdome.vue'
+import State from '../dome/state.vue'
 
 import { getToken } from '@/utils/myToken'
 
@@ -25,6 +27,16 @@ Vue.use(VueRouter)
 
 // 路由配置表 通过路径切换页面s
 const routes = [
+  {
+    path: '/state',
+    name: 'State',
+    component:State
+  } ,
+  {
+    path: '/slotDome',
+    name: 'SlotDome',
+    component:SlotDome
+  } ,
   {
     path: '/router',
     name: 'Router',
@@ -108,6 +120,11 @@ const routes = [
     path: '/search', 
     name: 'Search',
     component: Search,
+  },
+  {
+    path: '/manage', 
+    name: 'Manage',
+    component: Manage,
   },
 ]
 
